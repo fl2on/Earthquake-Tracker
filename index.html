@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terremotos de la Semana</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+
+    <!-- Moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+</head>
+<body class="bg-gradient-to-r from-blue-900 via-indigo-900 to-purple-900 text-white">
+    <div class="container mx-auto p-8">
+        <h1 class="text-3xl font-semibold mb-4">Terremotos de la Semana</h1>
+
+        <div class="flex space-x-4 mb-8">
+            <div class="w-1/2">
+                <div class="bg-white p-4 rounded shadow">
+                    <h2 class="text-lg font-semibold mb-2 text-black">Filtros</h2>
+                    <label class="block mb-2 text-black">Fecha de inicio</label>
+                    <input type="date" id="date-start" class="w-full p-2 mb-4 rounded shadow text-lg font-semibold mb-4 text-black">
+
+                    <label class="block mb-2 text-black">Fecha de finalización</label>
+                    <input type="date" id="date-end" class="w-full p-2 mb-4 rounded shadow text-lg font-semibold mb-4 text-black">
+
+                    <button class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold p-2 rounded" id="btn">Mostrar</button>
+                </div>
+            </div>
+
+            <div class="w-1/2">
+                <div class="bg-white p-4 rounded shadow">
+                    <h2 class="text-lg font-semibold mb-2 text-black">Estadísticas</h2>
+                    <div id="statistics" class="text-center text-black"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white p-4 rounded shadow mb-8">
+            <h2 class="text-lg font-semibold mb-2 text-black">Mapa de Terremotos</h2>
+            <div id="issMap" class="h-64"></div>
+        </div>
+
+        <div class="bg-white p-4 rounded shadow">
+            <h2 class="text-lg font-semibold mb-2 text-black">Lista de Terremotos</h2>
+            <div id="earthquakeData" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-black">
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // Establecer las fechas de inicio y fin en la semana actual
+        const today = new Date();
+        const startDate = new Date(today);
+        startDate.setDate(today.getDate() - 7);
+        const startDateFormatted = startDate.toISOString().split('T')[0];
+        const todayFormatted = today.toISOString().split('T')[0];
+        document.getElementById('date-start').value = startDateFormatted;
+        document.getElementById('date-end').value = todayFormatted;
+
+        // Mapa y fondo (tiles)
+        const mymap = L.map('issMap').setView([0, 0], 1.5);
+        const attribution = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+        const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        const tiles = L.tileLayer(tileUrl, { attribution });
+        tiles.addTo(mymap);
+
+        // Acceso a la API
+        const api_url = 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson';
+
+        async function getData() {
+            const startDate = document.getElementById('date-start').value;
+            const endDate = document.getElementById('date-end').value;
+            const apiUrl = `${api_url}&starttime=${startDate}&endtime=${endDate}`;
+
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+            console.log(data);
+
+            // Limpia el mapa y la lista de terremotos
+            mymap.eachLayer(layer => {
+                if (layer !== tiles) {
+                    mymap.removeLayer(layer);
+                }
+            });
+            document.getElementById('earthquakeData').innerHTML = '';
+
+            // Estadísticas
+            const statistics = {
+                totalTerremotos: data.metadata.count,
+                promedioMagnitud: calculateAverageMagnitude(data.features),
+            };
+
+            // Mostrar estadísticas
+            const statisticsDiv = document.getElementById('statistics');
+            statisticsDiv.innerHTML = `
+                <p class="text-black">Total de Terremotos: ${statistics.totalTerremotos}</p>
+                <p class="text-black">Promedio de Magnitud: ${statistics.promedioMagnitud}</p>
+            `;
+
+            // Mostrar terremotos en el mapa y la lista
+            for (let i = 0; i < data.features.length; i++) {
+                const earthquake = data.features[i];
+                const magnitude = earthquake.properties.mag;
+                const lat = earthquake.geometry.coordinates[1];
+                const lon = earthquake.geometry.coordinates[0];
+                const color = getColorByMagnitude(magnitude);
+
+                // Marcador en el mapa
+                const circle = L.circleMarker([lat, lon], {
+                    radius: magnitude * 3,
+                    color: 'black',
+                    fillColor: color,
+                    fillOpacity: 0.5,
+                }).addTo(mymap);
+
+                // Información en el mapa
+                const dateMs = new Date(earthquake.properties.time);
+                const date = dateMs.toUTCString();
+                circle.bindTooltip(`<h5>${earthquake.properties.place}</h5><p class="text-black">Magnitud: ${magnitude}</p><p class="text-black">${date}</p>`);
+
+                // Lista de terremotos
+                const earthquakeList = document.getElementById('earthquakeData');
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `<strong>${earthquake.properties.place}</strong> (Magnitud: ${magnitude}) - ${date}`;
+                earthquakeList.appendChild(listItem);
+            }
+        }
+
+        // Calcular el promedio de magnitud de terremotos
+        function calculateAverageMagnitude(earthquakes) {
+            const totalMagnitudes = earthquakes.reduce((acc, curr) => acc + curr.properties.mag, 0);
+            return (totalMagnitudes / earthquakes.length).toFixed(2);
+        }
+
+        // Asignar colores según la magnitud del terremoto
+        function getColorByMagnitude(magnitude) {
+            if (magnitude < 4) {
+                return 'green';
+            } else if (magnitude < 6) {
+                return 'orange';
+            } else {
+                return 'red';
+            }
+        }
+
+        // Agregar un controlador de eventos al botón "Mostrar"
+        document.getElementById('btn').addEventListener('click', function (e) {
+            e.preventDefault(); // Evita que el formulario se envíe
+            getData();
+        });
+
+        // Agregar controladores de eventos para los cambios en las fechas
+        document.getElementById('date-start').addEventListener('change', getData);
+        document.getElementById('date-end').addEventListener('change', getData);
+
+        // Llamar automáticamente a getData al cargar la página
+        getData();
+    </script>
+</body>
+</html>
