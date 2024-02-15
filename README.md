@@ -4,7 +4,7 @@
 
 Earthquake Tracker is a web application designed to help users track and analyze earthquake activity within a specified time range. This user-friendly tool offers interactive features for exploring earthquake data, including an interactive map, earthquake filtering, earthquake listing, and statistical information.
 
-![Earthquake Tracker](https://github.com/qzxtu/Earthquake-Tracker/assets/69091361/1bf5d6ae-cd2c-4d88-b6a1-bfe8ac4fb1ca)
+![Earthquake Tracker](https://github.com/qzxtu/Earthquake-Tracker/assets/69091361/3ea0d71e-0a2d-4e30-b506-6f387bed904b)
 
 ## Features
 
