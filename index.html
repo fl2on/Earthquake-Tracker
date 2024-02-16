@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terremotos de la Semana</title>
+    <title>Earthquakes of the Week</title>
     
     <!-- Tailwind CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -23,48 +23,48 @@
 </head>
 <body class="bg-gray-100 text-gray-800">
     <div class="container mx-auto p-8">
-        <h1 class="text-3xl font-semibold mb-4">Terremotos de la Semana</h1>
+        <h1 class="text-3xl font-semibold mb-4">Earthquakes of the Week</h1>
 
         <div class="flex space-x-4 mb-8">
             <div class="w-1/2">
                 <div class="bg-white p-4 rounded shadow">
-                    <h2 class="text-lg font-semibold mb-2 text-gray-800">Filtros</h2>
-                    <label class="block mb-2 text-gray-800">Fecha de inicio</label>
+                    <h2 class="text-lg font-semibold mb-2 text-gray-800">Filters</h2>
+                    <label class="block mb-2 text-gray-800">Start date</label>
                     <input type="date" id="date-start" class="w-full p-2 mb-4 rounded shadow text-lg font-semibold mb-4 text-gray-800">
 
-                    <label class="block mb-2 text-gray-800">Fecha de finalización</label>
+                    <label class="block mb-2 text-gray-800">End date</label>
                     <input type="date" id="date-end" class="w-full p-2 mb-4 rounded shadow text-lg font-semibold mb-4 text-gray-800">
 
-                    <button class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold p-2 rounded" id="btn">Mostrar</button>
+                    <button class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold p-2 rounded" id="btn">Show</button>
                 </div>
             </div>
 
             <div class="w-1/2">
                 <div class="bg-white p-4 rounded shadow">
-                    <h2 class="text-lg font-semibold mb-2 text-gray-800">Estadísticas</h2>
+                    <h2 class="text-lg font-semibold mb-2 text-gray-800">Statistics</h2>
                     <div id="statistics" class="text-center text-gray-800"></div>
                 </div>
             </div>
         </div>
 
         <div class="bg-white p-4 rounded shadow mb-8">
-            <h2 class="text-lg font-semibold mb-2 text-gray-800">Mapa de Terremotos</h2>
+            <h2 class="text-lg font-semibold mb-2 text-gray-800">Earthquake Map</h2>
             <div id="issMap" class="h-64"></div>
         </div>
 
         <div class="bg-white p-4 rounded shadow mb-8">
-            <h2 class="text-lg font-semibold mb-2 text-gray-800">Últimos Terremotos</h2>
+            <h2 class="text-lg font-semibold mb-2 text-gray-800">Latest Earthquakes</h2>
             <div id="latestEarthquakes" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-800">
             </div>
         </div>
 
         <div class="bg-white p-4 rounded shadow">
-            <h2 class="text-lg font-semibold mb-2 text-gray-800">Lista de Terremotos</h2>
+            <h2 class="text-lg font-semibold mb-2 text-gray-800">List of Earthquakes</h2>
             <div id="earthquakeData" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-800">
             </div>
         </div>
     </div>
-<script type="text/javascript">
+	<script type="text/javascript">
         // Establecer las fechas de inicio y fin en la semana actual
         const today = new Date();
         const startDate = new Date(today);
@@ -110,8 +110,8 @@
             // Mostrar estadísticas
             const statisticsDiv = document.getElementById('statistics');
             statisticsDiv.innerHTML = `
-                <p class="text-black">Total de Terremotos: ${statistics.totalTerremotos}</p>
-                <p class="text-black">Promedio de Magnitud: ${statistics.promedioMagnitud}</p>
+                <p class="text-black">Total Earthquakes: ${statistics.totalTerremotos}</p>
+                <p class="text-black">Average Magnitude: ${statistics.promedioMagnitud}</p>
             `;
 
             // Mostrar terremotos en el mapa y la lista
@@ -125,7 +125,7 @@
                 // Marcador en el mapa
                 const circle = L.circleMarker([lat, lon], {
                     radius: magnitude * 3,
-                    color: 'black',
+                    color: 'transparent',
                     fillColor: color,
                     fillOpacity: 0.5,
                 }).addTo(mymap);
@@ -133,12 +133,12 @@
                 // Información en el mapa
                 const dateMs = new Date(earthquake.properties.time);
                 const date = dateMs.toUTCString();
-                circle.bindTooltip(`<h5>${earthquake.properties.place}</h5><p class="text-black">Magnitud: ${magnitude}</p><p class="text-black">${date}</p>`);
+                circle.bindTooltip(`<h5>${earthquake.properties.place}</h5><p class="text-black">Magnitude: ${magnitude}</p><p class="text-black">${date}</p>`);
 
                 // Lista de terremotos
                 const earthquakeList = document.getElementById('earthquakeData');
                 const listItem = document.createElement('li');
-                listItem.innerHTML = `<strong>${earthquake.properties.place}</strong> (Magnitud: ${magnitude}) - ${date}`;
+                listItem.innerHTML = `<strong>${earthquake.properties.place}</strong> (Magnitude: ${magnitude}) - ${date}`;
                 earthquakeList.appendChild(listItem);
             }
         }
@@ -192,7 +192,7 @@
                 // Lista de últimos terremotos
                 const earthquakeList = document.getElementById('latestEarthquakes');
                 const listItem = document.createElement('li');
-                listItem.innerHTML = `<strong>${earthquake.properties.place}</strong> (Magnitud: ${magnitude}) - ${date}`;
+                listItem.innerHTML = `<strong>${earthquake.properties.place}</strong> (Magnitude: ${magnitude}) - ${date}`;
                 earthquakeList.appendChild(listItem);
             }
         }
@@ -201,4 +201,5 @@
         getLatestEarthquakes();
         setInterval(getLatestEarthquakes, 3600000);
     </script>
-</body></html>
+</body>
+</html>
