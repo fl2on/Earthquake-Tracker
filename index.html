@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
    crossorigin=""/>
-
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
@@ -24,7 +25,6 @@
 <body class="bg-gray-100 text-gray-800">
     <div class="container mx-auto p-8">
         <h1 class="text-3xl font-semibold mb-4">Earthquakes of the Week</h1>
-
         <div class="flex space-x-4 mb-8">
             <div class="w-1/2">
                 <div class="bg-white p-4 rounded shadow">
@@ -39,25 +39,25 @@
                 </div>
             </div>
 
-            <div class="w-1/2">
-                <div class="bg-white p-4 rounded shadow">
-                    <h2 class="text-lg font-semibold mb-2 text-gray-800">Statistics</h2>
-                    <div id="statistics" class="text-center text-gray-800"></div>
-                </div>
-            </div>
-        </div>
-
+			<div class="w-1/2">
+				<div class="bg-white p-4 rounded shadow">
+					<h2 class="text-lg font-semibold mb-2 text-gray-800">Statistics</h2>
+					<div id="statistics" class="text-center text-gray-800"></div>
+						<div>
+							<canvas id="myChart" style="width: 95%; height: 78px;"></canvas>
+						</div>
+				</div>
+			</div>
+		</div>
         <div class="bg-white p-4 rounded shadow mb-8">
             <h2 class="text-lg font-semibold mb-2 text-gray-800">Earthquake Map</h2>
             <div id="issMap" class="h-64"></div>
         </div>
-
         <div class="bg-white p-4 rounded shadow mb-8">
             <h2 class="text-lg font-semibold mb-2 text-gray-800">Latest Earthquakes</h2>
             <div id="latestEarthquakes" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-800">
             </div>
         </div>
-
         <div class="bg-white p-4 rounded shadow">
             <h2 class="text-lg font-semibold mb-2 text-gray-800">List of Earthquakes</h2>
             <div id="earthquakeData" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-800">
@@ -200,6 +200,97 @@
         // Llamar automáticamente a getLatestEarthquakes cada hora
         getLatestEarthquakes();
         setInterval(getLatestEarthquakes, 3600000);
+    </script>
+	    <script>
+        let currentGraph = null;
+        let currentGraphIndex = 0;
+
+        const graphData = [
+            {
+                label: 'Graph 1',
+                data: [0,0,0.1,0,0,0,0,0,0.1],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                tension: 0.4,
+            },
+            {
+                label: 'Graph 2',
+                data: [0.1, -0.1, -0.2, 0, -0.2, 0.1,0.4, 0.2, 0.2, 0.1],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                tension: 0.4,
+            },
+            {
+                label: 'Graph 3',
+                data: [0.1,0,-0.1, 0.4   , 0.4, 0.3, 0.4, 0.5, 0.3, 0.5],
+                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                tension: 0.4,
+            }
+        ];
+
+        function showGraph() {
+            if (currentGraph !== null) {
+                currentGraph.destroy();
+            }
+
+            const canvas = document.getElementById('myChart');
+            const ctx = canvas.getContext('2d');
+
+            const data = graphData[currentGraphIndex];
+
+            currentGraph = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1'],
+                    datasets: [data]
+                },
+                options: {
+                    animation: false,
+                    scales: {
+                        y: {
+                            suggestedMin: -0.5,
+                            suggestedMax: 0.5,
+                            beginAtZero: true,
+                            grid: {
+                                display: false,
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false,
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: false
+                        }
+                    },
+                    elements: {
+                        point: {
+                            radius: 0
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateGraph() {
+            const data = graphData[currentGraphIndex];
+            data.data.push(data.data[0]);
+            data.data.shift();
+            showGraph();
+        }
+
+        window.onload = showGraph;
+        setInterval(updateGraph, 1000);
     </script>
 </body>
 </html>
