@@ -23,44 +23,42 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 </head>
 <body class="bg-gray-100 text-gray-800">
-    <div class="container mx-auto p-8">
-        <h1 class="text-3xl font-semibold mb-4">Earthquakes of the Week</h1>
-        <div class="flex space-x-4 mb-8">
+    <div class="container mx-auto p-4">
+        <h1 class="text-2xl font-semibold mb-2">Earthquakes of the Week</h1>
+        <div class="flex space-x-2 mb-4">
             <div class="w-1/2">
-                <div class="bg-white p-4 rounded shadow">
-                    <h2 class="text-lg font-semibold mb-2 text-gray-800">Filters</h2>
-                    <label class="block mb-2 text-gray-800">Start date</label>
-                    <input type="date" id="date-start" class="w-full p-2 mb-4 rounded shadow text-lg font-semibold mb-4 text-gray-800">
-
-                    <label class="block mb-2 text-gray-800">End date</label>
-                    <input type="date" id="date-end" class="w-full p-2 mb-4 rounded shadow text-lg font-semibold mb-4 text-gray-800">
-
-                    <button class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold p-2 rounded" id="btn">Show</button>
+                <div class="bg-white p-2 rounded shadow">
+                    <h2 class="text-md font-semibold mb-1 text-gray-800">Filters</h2>
+                    <label class="block mb-1 text-gray-800">Start date</label>
+                    <input type="date" id="date-start" class="w-full p-1 mb-2 rounded shadow text-sm font-semibold mb-2 text-gray-800">
+                    <label class="block mb-1 text-gray-800">End date</label>
+                    <input type="date" id="date-end" class="w-full p-1 mb-2 rounded shadow text-sm font-semibold mb-2 text-gray-800">
+                    <button class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold p-1 rounded" id="btn">Show</button>
                 </div>
             </div>
 
 			<div class="w-1/2">
-				<div class="bg-white p-4 rounded shadow">
-					<h2 class="text-lg font-semibold mb-2 text-gray-800">Statistics</h2>
-					<div id="statistics" class="text-center text-gray-800"></div>
-						<div>
-							<canvas id="myChart" style="width: 95%; height: 78px;"></canvas>
-						</div>
+				<div class="bg-white p-2 rounded shadow">
+					<h2 class="text-md font-semibold mb-1 text-gray-800">Statistics</h2>
+					<div id="statistics" class="text-center text-sm text-gray-800"></div>
+					<div>
+						<canvas id="myChart" style="width: 95%; height: 78px;"></canvas>
+					</div>
 				</div>
 			</div>
 		</div>
-        <div class="bg-white p-4 rounded shadow mb-8">
-            <h2 class="text-lg font-semibold mb-2 text-gray-800">Earthquake Map</h2>
-            <div id="issMap" class="h-64"></div>
+        <div class="bg-white p-2 rounded shadow mb-4">
+            <h2 class="text-md font-semibold mb-1 text-gray-800">Earthquake Map</h2>
+            <div id="issMap" class="h-32"></div>
         </div>
-        <div class="bg-white p-4 rounded shadow mb-8">
-            <h2 class="text-lg font-semibold mb-2 text-gray-800">Latest Earthquakes</h2>
-            <div id="latestEarthquakes" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-800">
+        <div class="bg-white p-2 rounded shadow mb-4">
+            <h2 class="text-md font-semibold mb-1 text-gray-800">Latest Earthquakes</h2>
+            <div id="latestEarthquakes" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 text-sm text-gray-800">
             </div>
         </div>
-        <div class="bg-white p-4 rounded shadow">
-            <h2 class="text-lg font-semibold mb-2 text-gray-800">List of Earthquakes</h2>
-            <div id="earthquakeData" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-800">
+        <div class="bg-white p-2 rounded shadow">
+            <h2 class="text-md font-semibold mb-1 text-gray-800">List of Earthquakes</h2>
+            <div id="earthquakeData" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 text-sm text-gray-800">
             </div>
         </div>
     </div>
@@ -133,7 +131,7 @@
                 // Información en el mapa
                 const dateMs = new Date(earthquake.properties.time);
                 const date = dateMs.toUTCString();
-                circle.bindTooltip(`<h5>${earthquake.properties.place}</h5><p class="text-black">Magnitude: ${magnitude}</p><p class="text-black">${date}</p>`);
+                circle.bindTooltip(`<h6>${earthquake.properties.place}</h6><p class="text-black">Magnitude: ${magnitude}</p><p class="text-black">${date}</p>`);
 
                 // Lista de terremotos
                 const earthquakeList = document.getElementById('earthquakeData');
