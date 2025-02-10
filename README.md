@@ -1,45 +1,128 @@
-# Earthquake Tracker
 
-## Description
 
-Earthquake Tracker is a web application designed to help users track and analyze earthquake activity within a specified time range. This user-friendly tool offers interactive features for exploring earthquake data, including an interactive map, earthquake filtering, earthquake listing, and statistical information.
+# Seismic Global Information Center <img src="img/favicon.png" width="95" height="95" align="right" />
 
-![image](https://github.com/qzxtu/Earthquake-Tracker/assets/69091361/5054c517-6b93-4637-bea7-3dbe9ac444d4)
+[![Website Status](https://img.shields.io/website/http/yourwebsite.com?up_message=Online&down_message=Offline&label=Status)](https://yourwebsite.com)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)  [![Built With HTML, CSS, JavaScript](https://img.shields.io/badge/Built%20with-HTML%20%7C%20CSS%20%7C%20JavaScript-orange)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![Leaflet](https://img.shields.io/badge/Map-Leaflet-0078A8?logo=leaflet&logoColor=white)](https://leafletjs.com/)
+[![Chart.js](https://img.shields.io/badge/Charts-Chart.js-FF6384?logo=chart.js&logoColor=white)](https://www.chartjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Styling-Tailwind%20CSS-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 
-## Features
+> **Stay Informed, Stay Safe.** A comprehensive and visually appealing information hub to explore global earthquakes in real-time, featuring interactive maps, detailed statistics, relevant news, and essential safety tips.
 
-### Interactive Map
+## 📸 Screenshot
 
-The application features an interactive map that displays earthquake locations using intuitive visual cues. Earthquakes are represented as circles on the map, with different colors indicating their magnitudes. Users can click on these circles to access additional information about specific earthquakes.
+![image](https://github.com/user-attachments/assets/acbf9fe4-5cce-49e1-a1cd-637e076c6162)
 
-### Date Range Filtering
 
-Earthquake Tracker allows users to narrow down earthquake data by specifying a start date and an end date. This filtering capability ensures that users can focus on earthquakes that occurred within their desired time frame.
+## 🚀 Key Features
 
-### Earthquake Listing
+*   **🌍 Interactive Earthquake Map:**
+    *   Explore a dynamic world map displaying recent earthquakes using the powerful Leaflet library.
+    *   **Advanced Filters:** Customize your view with filters for:
+        *   **Minimum Magnitude:** Adjust the intensity of earthquakes you wish to visualize with an intuitive slider control.
+        *   **Time Period:** Select predefined intervals (Last Hour, Last Day, Last Week, Last Month) to focus your search.
+        *   **Map Style:** Choose between different visual map styles (Streets, Satellite, Terrain) to suit your preferences.
+    *   **Marker Clustering:** Clear and efficient visualization thanks to marker clustering, ideal for areas with high seismic density.
+    *   **Informative Popups:** Click on each marker to get precise earthquake details: location, magnitude, date and time, depth, and a direct link to the USGS source for more information.
+    *   **Marker Animations:** Dynamic markers with pulse animation to highlight seismic activity on the map.
 
-Below the map, a comprehensive list of earthquakes meeting the specified date criteria is provided. This list includes essential details about each earthquake, such as its location, magnitude, and the date it occurred. Users can quickly scan this list for specific earthquake information.
+*   **📊 Detailed Seismic Statistics:**
+    *   Gain a complete overview of recent seismic activity with key statistics panels:
+        *   **Total Earthquakes:** Total number of seismic events detected in the selected period.
+        *   **Average Magnitude:** Average magnitude of earthquakes, providing a general perspective of intensity.
+        *   **Maximum Magnitude:** The strongest earthquake recorded, highlighting the most significant events.
+        *   **Earthquakes in the Last 24 Hours:** Specific count of the most recent seismic activity.
+    *   **Interactive Charts:** Visualize seismic patterns and trends with dynamic charts created with Chart.js:
+        *   **Magnitude Distribution:** Histogram showing the frequency of earthquakes per magnitude range.
+        *   **Magnitude Over Time:** Time series graph illustrating magnitude evolution over time.
+        *   **Depth Distribution:** Histogram revealing the distribution of seismic focus depths.
+        *   **Loading Animations:** Charts with fade-in animation for an engaging visual experience.
 
-### Statistical Information
+*   **📰 Latest Earthquakes & Seismic News Section:**
+    *   **Latest Earthquakes List:** Quickly consult an updated list of the most recent earthquakes, with essential information for each event.
+    *   **Seismic News (Coming Soon):** Dedicated space to integrate relevant news about seismic events and related topics (feature under development).
 
-For users interested in broader insights, the "Estadísticas" (Statistics) section offers valuable statistical information. It displays the total number of earthquakes that occurred within the specified date range and calculates the average magnitude of those earthquakes.
+*   **⛑️ Safety Tips and Educational Resources:**
+    *   **Interactive Safety Guides:** Access essential safety tips organized into key categories: Before, During, and After an earthquake, and the importance of the Emergency Kit. (Detailed content under development).
+    *   **Additional Educational Resources:** Direct links to valuable external resources to expand your knowledge and preparedness:
+        *   **Educational Videos:** YouTube playlist with informative videos about earthquakes.
+        *   **PDF Preparation Guide:** Download the official earthquake preparedness guide from ready.gov.
 
-## Usage
+*   **🌐 Language Selector:**
+    *   Navigate the site in your preferred language with a language selector in the navigation bar, with support for: Spanish, English, French, German, Italian, Chinese, and Japanese (Translations in progress).
 
-1. **Specify Date Range**: To begin, use the "Fecha de inicio" (Start date) and "Fecha de finalización" (End date) input fields to define the time range you want to investigate. This allows you to focus on a specific period of earthquake activity.
+*   **📱 Responsive Design & Dark Theme:**
+    *   **Fully Responsive:** Optimal experience on any device: desktop, tablets, and mobile phones.
+    *   **Elegant Dark Theme:** Modern and attractive design with a default dark theme.
 
-2. **Retrieve Earthquake Data**: After entering your desired date range, click the "Mostrar" (Show) button. Earthquake Tracker will fetch earthquake data based on your date criteria and update the map and earthquake list accordingly.
+*   **✨ CSS Animations:**
+    *   Enhanced user experience with subtle and engaging CSS animations in navigation, sections, buttons, charts, and map markers.
 
-3. **Explore the Map**: The map will display earthquake locations as circles, with different colors representing the magnitudes. Clicking on these circles will provide detailed information about individual earthquakes.
+## 🛠️ Technologies Used
 
-4. **Review Earthquake List**: Below the map, you can explore a comprehensive list of earthquakes that match your specified date range. This list includes key details about each earthquake.
+This project has been built using the following essential technologies and libraries:
 
-5. **Check Statistics**: In the "Estadísticas" (Statistics) section, you will find valuable insights, such as the total number of earthquakes within your selected date range and the average magnitude of those earthquakes.
+*   **Frontend:**
+    *   **HTML5:** Structure and content of the webpage.
+    *   **CSS3:** Visual styles, responsive design, and animations.
+        *   **Tailwind CSS:** Utility-first CSS framework for rapid and consistent development.
+        *   **Custom CSS:** Specific styles and animations in `style.css`.
+    *   **JavaScript (ES6+):** Interactivity, DOM manipulation, API consumption, and dynamic functionalities.
+        *   **Leaflet:** JavaScript library for interactive maps.
+        *   **Leaflet.markercluster:** Leaflet plugin for clustering markers.
+        *   **Chart.js:** JavaScript library for creating charts.
+        *   **Moment.js & Chartjs-adapter-moment:** For date and time management in charts.
+        *   **Axios:** HTTP client for making API requests (in the future for real-time data).
 
-## Additional Information
+*   **External Resources (CDN):**
+    *   **Google Fonts (Lato):** Typography.
+    *   **Font Awesome, Unicons, Material Icons:** Iconography.
+    *   **CDN for JavaScript and CSS libraries:** Facilitates the inclusion of project dependencies.
 
-- Earthquake data is sourced from reputable seismic monitoring organizations, ensuring accuracy and reliability.
-- The application is designed to provide a user-friendly experience, making earthquake tracking and analysis accessible to a wide range of users.
-- Please note that earthquake data may be subject to updates and revisions by monitoring agencies. Users are encouraged to refer to official sources for the most up-to-date information.
+## 💡 Usage
 
-Earthquake Tracker empowers users to explore and understand earthquake activity within a specific timeframe, making it a valuable tool for researchers, educators, and anyone interested in seismic events.
+Navigate through the different sections using the navigation bar:
+
+*   **Home:** Takes you to the main section with an overview and the button to view the map.
+*   **Statistics:** Access statistics panels and charts about earthquakes.
+*   **News:** Consult the latest seismic news (feature under development).
+*   **Tips:** Explore interactive safety guides and links to educational resources.
+
+Interact with the map in the "Earthquake Map" section:
+
+*   **Filter by Magnitude:** Use the slider control to adjust the minimum magnitude.
+*   **Change Time Period:** Select a different period in the dropdown menu.
+*   **Choose your Map Style:** Select your preferred map style from the dropdown menu.
+*   **Click on Markers:** Get detailed information for each earthquake in popups.
+
+## 🙏 Credits and Acknowledgements
+
+This project would not have been possible without the amazing open-source libraries, resources, and communities that have contributed to web development.  We gratefully acknowledge the following:
+
+*   **Open-Source Libraries:**
+    *   **Leaflet:**  For providing the fantastic interactive map library that is the heart of our earthquake visualization. We are deeply thankful for the Leaflet community's dedication to creating such a powerful and user-friendly mapping tool. [Link to Leaflet Website](https://leafletjs.com/)
+    *   **Leaflet.markercluster:** For the excellent MarkerCluster plugin, which significantly enhances the map's usability by efficiently handling and displaying large numbers of earthquake markers. [Link to Leaflet.markercluster GitHub](https://github.com/Leaflet/Leaflet.markercluster)
+    *   **Chart.js:** For the beautiful and versatile Chart.js library that allows us to create informative and visually appealing statistical charts. [Link to Chart.js Website](https://www.chartjs.org/)
+    *   **Moment.js and Chartjs-adapter-moment:** For providing the necessary tools to work with dates and times effectively within our charts, making time-based data visualization seamless. [Link to Moment.js Website](https://momentjs.com/) and [Link to Chartjs-adapter-moment GitHub](https://github.com/chartjs/chartjs-adapter-moment)
+    *   **Tailwind CSS:** For the utility-first CSS framework that significantly sped up our styling process and allowed us to create a consistent and responsive design efficiently.  [Link to Tailwind CSS Website](https://tailwindcss.com/)
+    *   **Axios:** For the promise-based HTTP client that is essential for future integration with earthquake data APIs. [Link to Axios GitHub](https://github.com/axios/axios)
+
+*   **Iconography:**
+    *   **Font Awesome:** For the extensive collection of icons that enhance the visual communication and user interface of our website. [Link to Font Awesome Website](https://fontawesome.com/)
+    *   **Unicons by Iconscout:** For providing a diverse and stylish set of icons to complement our design. [Link to Unicons Website](https://unicons.iconscout.com/)
+    *   **Material Icons:** For the comprehensive set of Material Design icons, offering a consistent and recognizable iconographic language. [Link to Material Icons on Google Fonts](https://fonts.google.com/icons)
+
+*   **Typography:**
+    *   **Google Fonts - Lato:** For making the beautiful and readable Lato font freely available, contributing significantly to the website's typography and readability. [Link to Lato Font on Google Fonts](https://fonts.google.com/specimen/Lato)
+
+*   **Data Sources (To be implemented):**
+    *   **US Geological Survey (USGS) Earthquake Hazards Program:** We plan to utilize data from the USGS Earthquake Hazards Program API to provide real-time earthquake information. We appreciate their commitment to making earthquake data publicly accessible. [Link to USGS Earthquake Hazards Program Website](https://www.usgs.gov/natural-hazards/earthquake-hazards/earthquakes)  *(Note: Data source integration is planned for future development)*
+
+## 📝 License
+
+This project is distributed under the [MIT License](LICENSE) (If you have chosen an MIT license or another one. Replace and adjust according to your license). See the `LICENSE` file for more details.
+
+## 🧑‍💻 Author
+
+Developed by [fl2on](https://github.com/fl2on/)
