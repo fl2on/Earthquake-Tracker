@@ -11,6 +11,57 @@
     --h2-line-height: 55px;
 }
 
+
+/* MAIN SECTION Ajustes generales */
+section {
+    padding-top: 50px;
+}
+.full-screen {
+    min-height: 100vh;
+    padding: 50px 0 0;
+}
+
+.left, .right {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 10px;
+}
+
+.left h2 {
+    margin-top: 15px;
+    font-size: var(--h2-font-size);
+    color: var(--white);
+    line-height: var(--h2-line-height);
+}
+.left h2 span {
+    color: var(--mainColor);
+}
+
+.btn {
+    height: 44px;
+    padding: 0px 30px;
+    background-color: var(--mainColor);
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+    letter-spacing: 1px;
+    border: none;
+    margin-top: 15px;
+    box-shadow: 0px 8px 24px 0 rgba(228, 10, 57, .2);
+    transition: all .2s linear;
+}
+.btn:hover {
+    background-color: var(--white);
+    color: var(--mainColor);
+    box-shadow: 0 8px 24px 0 rgba(138, 140, 146, .2);
+}
+
+
 /* Ajuste general para subir los elementos */
 body {
     margin-top: -30px;
@@ -275,6 +326,45 @@ nav .container {
     justify-content: space-between;
 }
 
+.slider-container {
+    position: relative; /* Importante: para que el tooltip se posicione relativamente a este contenedor */
+}
+
+.magnitude-tooltip {
+    position: absolute; /* Posicionamiento absoluto para colocarlo sobre el slider */
+    top: -35px;         /* Ajusta la distancia vertical desde el slider thumb */
+    left: 50%;          /* Centra horizontalmente inicialmente */
+    transform: translateX(-50%); /* Centra horizontalmente de forma precisa */
+    background-color: var(--mainColor); /* Color de fondo del tooltip - crimson */
+    color: var(--white);       /* Color del texto del tooltip - blanco */
+    padding: 5px 10px;       /* Padding interior del tooltip */
+    border-radius: 5px;       /* Bordes redondeados del tooltip */
+    font-size: 0.9em;        /* Tamaño de fuente del texto del tooltip */
+    white-space: nowrap;      /* Evita que el texto del tooltip se rompa en varias líneas */
+    opacity: 0;             /* Inicialmente oculto */
+    visibility: hidden;      /* Inicialmente oculto */
+    transition: opacity 0.2s, visibility 0.2s; /* Transición suave para aparecer/desaparecer */
+    z-index: 10;            /* Asegura que esté por encima del slider y otros elementos */
+    pointer-events: none;    /* Permite que los eventos del ratón pasen a través del tooltip */
+}
+
+.magnitude-tooltip::after { /* Pseudo-elemento para crear la "flecha" del tooltip */
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--mainColor) transparent transparent transparent; /* Triángulo hacia abajo con color crimson */
+}
+
+.custom-slider:active + .magnitude-tooltip, /* Muestra el tooltip cuando el slider está activo (se hace clic/se arrastra) */
+.custom-slider:focus + .magnitude-tooltip { /* También mostrarlo si el slider tiene el foco (por accesibilidad) */
+    opacity: 1;             /* Hace el tooltip visible */
+    visibility: visible;      /* Hace el tooltip visible */
+}
+
 /* Estilos personalizados para el control deslizante (range input) - CON RELLENO CRIMSON */
 .custom-slider {
     -webkit-appearance: none; /* Elimina estilos por defecto de navegadores WebKit (Chrome, Safari) */
@@ -313,8 +403,8 @@ nav .container {
     background-clip: padding-box; /* Importante para que el padding-box no afecte el color de fondo */
     -webkit-box-shadow: inset -1px 0 0 var(--black), inset 0 0 0 9999px var(--black); /* Sombra interna para "cortar" el fondo del pulgar y revelar el relleno */
     box-shadow: inset -1px 0 0 var(--black), inset 0 0 0 9999px var(--black); /* Sombra interna para "cortar" el fondo del pulgar y revelar el relleno */
-    -webkit-background-color: var(--black) !important; /* Color de fondo del pulgar -  NEGRO para "cortar" */
-    background-color: var(--black) !important; /* Color de fondo del pulgar - NEGRO para "cortar" */
+	-webkit-background-color: var(--mainColor) !important; /* Color de fondo del pulgar - AHORA CRIMSON */
+    background-color: var(--mainColor) !important; /* Color de fondo del pulgar - AHORA CRIMSON */
 }
 
 .custom-slider::-moz-range-track { /* Estilos para el track en Firefox - NECESARIO PARA RELLENO */
@@ -367,9 +457,3 @@ nav .container {
 .custom-slider:focus::-moz-range-thumb {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.6), 0 0 0 3px var(--black);
 }
-
-background-clip: padding-box;
--webkit-box-shadow: inset -1px 0 0 var(--black), inset 0 0 0 9999px var(--black);
-box-shadow: inset -1px 0 0 var(--black), inset 0 0 0 9999px var(--black);
--webkit-background-color: var(--black) !important;
-background-color: var(--black) !important;

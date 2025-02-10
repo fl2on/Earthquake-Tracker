@@ -25,43 +25,48 @@
     <script src="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              'main-color': 'crimson',
-              'black-color': '#000000',
-              'white-color': '#FFFFFF',
-              'white-smoke': '#C4C3CA',
-              'dark-1b': '#1B1B1B',
-              'dark-242323': '#242323',
-              primary: 'crimson',
-              secondary: '#C4C3CA',
-              background: '#000000',
-              surface: '#1B1B1B',
-              text: '#FFFFFF',
-              'text-secondary': '#C4C3CA',
-            },
-            fontFamily: {
-              'lato': ['Lato', 'sans-serif'],
-              sans: ['Lato', 'sans-serif'],
-            },
-            boxShadow: {
-              'custom': '0px 4px 8px 0 rgba(21, 21, 21, .2)',
-              'btn': '0px 8px 24px 0 rgba(228, 10, 57, .2)',
-              'btn-hover': '0 8px 24px 0 rgba(138, 140, 146, .2)',
-            },
-            fontSize: {
-              'h2': '50px',
-            },
-            lineHeight: {
-              'h2': '55px',
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
+    <link href="https://cdn.jsdelivr.net/npm/material-icons@latest/iconfont/material-icons.css" rel="stylesheet">
+    <script src="js/script.js"></script>
+	    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'main-color': 'crimson',
+                        'black-color': '#000000',
+                        'white-color': '#FFFFFF',
+                        'white-smoke': '#C4C3CA',
+                        'dark-1b': '#1B1B1B',
+                        'dark-242323': '#242323',
+
+                        primary:     'crimson',
+                        secondary: '#C4C3CA',
+                        background: '#000000',
+                        surface:     '#1B1B1B',
+                        text:        '#FFFFFF',
+                        'text-secondary': '#C4C3CA',
+                    },
+                    fontFamily: {
+                        'lato': ['Lato', 'sans-serif'],
+                        sans: ['Lato', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'custom': '0px 4px 8px 0 rgba(21, 21, 21, .2)',
+                        'btn': '0px 8px 24px 0 rgba(228, 10, 57, .2)',
+                        'btn-hover': '0 8px 24px 0 rgba(138, 140, 146, .2)',
+                    },
+                    fontSize: {
+                        'h2': '50px',
+                    },
+                    lineHeight: {
+                        'h2': '55px',
+                    }
+                }
             }
-          }
         }
-      }
     </script>
   </head>
   <body class="bg-background text-text font-sans">
@@ -76,7 +81,7 @@
           </label>
           <ul class="hidden lg:flex space-x-5 ml-10 mt-2">
             <li>
-              <a href="#map-container" class="nav-link text-white-color font-semibold px-4 py-2 rounded hover:text-main-color hover:bg-white-color transition-colors active" data-i18n="inicio">Inicio</a>
+              <a href="#mapa" class="nav-link text-white-color font-semibold px-4 py-2 rounded hover:text-main-color hover:bg-white-color transition-colors active" data-i18n="inicio">Inicio</a>
             </li>
             <li>
               <a href="#estadisticas" class="nav-link text-white-color font-semibold px-4 py-2 rounded hover:text-main-color hover:bg-white-color transition-colors" data-i18n="estadisticas">Estadísticas</a>
@@ -123,11 +128,12 @@
       <section id="map-container" class="bg-surface rounded-lg p-6 shadow-custom">
         <h2 class="text-xl font-semibold mb-4 text-white-color" data-i18n="mapa_terremotos">Mapa de Terremotos Recientes</h2>
         <div class="flex flex-wrap gap-4 mb-4">
-          <div class="flex-1 min-w-[200px]">
-            <label for="magnitudeFilter" class="block text-sm font-medium text-text-secondary mb-1" data-i18n="magnitud_minima"> Magnitud mínima: <span id="magnitudeValue">0</span>
-            </label>
-            <input type="range" id="magnitudeFilter" min="0" max="9" value="0" step="0.1" class="custom-slider">
-          </div>
+			  <div class="flex-1 min-w-[200px]">
+				<label for="magnitudeFilter" class="block text-sm font-medium text-text-secondary mb-1">
+					<span data-i18n="magnitud_minima">Magnitud mínima:</span> <span id="magnitudeValue">0</span>
+				</label>
+				<input type="range" id="magnitudeFilter" min="0" max="9" value="0" step="0.1" class="custom-slider">
+			  </div>
           <div class="flex-1 min-w-[200px]">
             <label for="timePeriod" class="block text-sm font-medium text-text-secondary mb-1" data-i18n="periodo">Periodo:</label>
             <select id="timePeriod" class="w-full bg-surface border border-gray-800 text-white-smoke rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
@@ -235,9 +241,5 @@
         <p data-i18n="copyright">© Centro de Información Sísmica Global. Todos los derechos reservados.</p>
       </div>
     </footer>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
-    <link href="https://cdn.jsdelivr.net/npm/material-icons@latest/iconfont/material-icons.css" rel="stylesheet">
-    <script src="js/script.js"></script>
   </body>
 </html>

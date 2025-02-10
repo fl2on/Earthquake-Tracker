@@ -8,11 +8,11 @@ let markerClusterGroup;
 let userLocation;
 let currentEarthquakesData; // Variable global para almacenar los datos de terremotos
 
-// Objeto con las traducciones (directamente en script.js para simplificar)
+// Objeto con las traducciones
 const translations = {
     es: {
         titulo_pagina: "Centro de Información Sísmica Global",
-        titulo_principal: "Información Sísmica Global al Alcance de tu Mano",
+        titulo_principal: 'Información Sísmica Global <br> al <span>Alcance de tu Mano</span>', // ¡SPAN AÑADIDO!
         texto_principal: "Mantente actualizado con los últimos datos sísmicos y aprende cómo protegerte y proteger a tus seres queridos.",
         boton_mapa: "Ver Mapa Interactivo",
         inicio: "Inicio",
@@ -76,7 +76,7 @@ const translations = {
     },
     en: {
         titulo_pagina: "Global Seismic Information Center",
-        titulo_principal: "Global Earthquake Information at Your Fingertips",
+        titulo_principal: 'Global Earthquake Information <br> at <span>Your Fingertips</span>', // ¡SPAN AÑADIDO!
         texto_principal: "Stay updated with the latest seismic data and learn how to protect yourself and your loved ones.",
         boton_mapa: "View Interactive Map",
         inicio: "Home",
@@ -124,7 +124,7 @@ const translations = {
         descargar_pdf: "Download PDF",
         copyright: "© %{year} Global Seismic Information Center. All rights reserved.",
         alerta_titulo: "Significant Earthquake Alert!",
-        alerta_significativo: "SIGNIFICANT earthquake of magnitude %{magnitude} detected in %{lugar}! Check the map and stay informed.",
+        alerta_significativo: 'SIGNIFICANT earthquake of magnitude %{magnitude} detected in %{lugar}! Check the map and stay informed.', // ¡SPAN AÑADIDO!
         alerta_cercano: "Possible earthquake nearby! Tremor of magnitude %{magnitude} detected near your location.",
         popup_magnitud: "Magnitude",
         popup_ubicacion: "Location",
@@ -140,7 +140,7 @@ const translations = {
     },
     fr: {
         titulo_pagina: "Centre d'Information Sismique Mondial",
-        titulo_principal: "Informations Mondiales sur les Séismes à Portée de Main",
+        titulo_principal: 'Informations Mondiales sur les Séismes <br> à <span>Portée de Main</span>', // ¡SPAN AÑADIDO!
         texto_principal: "Restez informé des dernières données sismiques et apprenez à vous protéger et à protéger vos proches.",
         boton_mapa: "Voir la Carte Interactive",
         inicio: "Accueil",
@@ -188,7 +188,7 @@ const translations = {
         descargar_pdf: "Télécharger PDF",
         copyright: "© %{year} Centre d'Information Sismique Mondial. Tous droits réservés.",
         alerta_titulo: "Alerte de Séisme Important!",
-        alerta_significativo: "Séisme IMPORTANT de magnitude %{magnitude} détecté à %{lugar} ! Consultez la carte et restez informé.",
+        alerta_significativo: 'Séisme IMPORTANT de magnitude %{magnitude} détecté à %{lugar} ! Consultez la carte et restez informé.', // ¡SPAN AÑADIDO!
         alerta_cercano: "Séisme possible à proximité ! Secousse de magnitude %{magnitude} détectée près de votre emplacement.",
         popup_magnitud: "Magnitude",
         popup_ubicacion: "Emplacement",
@@ -204,7 +204,7 @@ const translations = {
     },
     de: {
         titulo_pagina: "Globales Seismisches Informationszentrum",
-        titulo_principal: "Globale Erdbebeninformationen zum Greifen nah",
+        titulo_principal: 'Globale Erdbebeninformationen <br> zum <span>Greifen nah</span>', // ¡SPAN AÑADIDO!
         texto_principal: "Bleiben Sie auf dem Laufenden mit den neuesten seismischen Daten und lernen Sie, wie Sie sich und Ihre Lieben schützen können.",
         boton_mapa: "Interaktive Karte Anzeigen",
         inicio: "Startseite",
@@ -252,7 +252,7 @@ const translations = {
         descargar_pdf: "PDF Herunterladen",
         copyright: "© %{year} Globales Seismisches Informationszentrum. Alle Rechte vorbehalten.",
         alerta_titulo: "Wichtige Erdbebenwarnung!",
-        alerta_significativo: "WICHTIGES Erdbeben der Magnitude %{magnitude} in %{lugar} entdeckt! Überprüfen Sie die Karte und bleiben Sie informiert.",
+        alerta_significativo: 'WICHTIGES Erdbeben der Magnitude %{magnitude} in %{lugar} entdeckt! Überprüfen Sie die Karte und bleiben Sie informiert.', // ¡SPAN AÑADIDO!
         alerta_cercano: "Mögliches Erdbeben in der Nähe! Beben der Magnitude %{magnitude} in der Nähe Ihres Standorts entdeckt.",
         popup_magnitud: "Magnitude",
         popup_ubicacion: "Ort",
@@ -265,10 +265,11 @@ const translations = {
         kit_emergencia_detalles: "Wasser, haltbare Lebensmittel, Radio, Taschenlampe, Erste-Hilfe-Set.",
         distribucion_magnitudes_chart_title: "Verteilung der Magnituden",
         distribucion_profundidad_chart_title: "Tiefenverteilung"
+
     },
     it: {
         titulo_pagina: "Centro di Informazione Sismica Globale",
-        titulo_principal: "Informazioni Globali sui Terremoti a Portata di Mano",
+        titulo_principal: 'Informazioni Globali sui Terremoti <br> a <span>Portata di Mano</span>', // ¡SPAN AÑADIDO!
         texto_principal: "Rimani aggiornato con gli ultimi dati sismici e impara come proteggere te stesso e i tuoi cari.",
         boton_mapa: "Visualizza Mappa Interattiva",
         inicio: "Home",
@@ -316,7 +317,7 @@ const translations = {
         descargar_pdf: "Scarica PDF",
         copyright: "© %{year} Centro di Informazione Sismica Globale. Tutti i diritti riservati.",
         alerta_titulo: "Allerta Terremoto Significativo!",
-        alerta_significativo: "Terremoto SIGNIFICATIVO di magnitudo %{magnitude} rilevato in %{lugar}! Controlla la mappa e rimani informato.",
+        alerta_significativo: 'Terremoto SIGNIFICATIVO di magnitudo %{magnitude} rilevato in %{lugar}! Controlla la mappa e rimani informato.', // ¡SPAN AÑADIDO!
         alerta_cercano: "Possibile terremoto nelle vicinanze! Tremore di magnitudo %{magnitude} rilevato vicino alla tua posizione.",
         popup_magnitud: "Magnitudo",
         popup_ubicacion: "Posizione",
@@ -332,7 +333,7 @@ const translations = {
     },
     zh: {
         titulo_pagina: "全球地震信息中心",
-        titulo_principal: "触手可及的全球地震信息",
+        titulo_principal: '触手可及的全球地震信息 <br> <span style="color: var(--main-color);">全球地震信息</span>', // ¡SPAN AÑADIDO y estilo INLINE para color crimson!
         texto_principal: "随时了解最新的地震数据，学习如何保护自己和您的亲人。",
         boton_mapa: "查看互动地图",
         inicio: "首页",
@@ -380,7 +381,7 @@ const translations = {
         descargar_pdf: "下载 PDF",
         copyright: "© %{year} 全球地震信息中心。保留所有权利。",
         alerta_titulo: "重大地震警报！",
-        alerta_significativo: "在 %{lugar} 检测到 %{magnitude} 级【重大】地震！查看地图并随时了解情况。",
+        alerta_significativo: "在 %{lugar} 检测到 %{magnitude} 级【重大】地震！查看地图并随时了解情况。", // ¡SPAN AÑADIDO!
         alerta_cercano: "附近可能有地震！在您所在位置附近检测到 %{magnitude} 级震动。",
         popup_magnitud: "震级",
         popup_ubicacion: "位置",
@@ -396,7 +397,7 @@ const translations = {
     },
     ja: {
         titulo_pagina: "グローバル地震情報センター",
-        titulo_principal: "手のひらでわかる世界の地震情報",
+        titulo_principal: '手のひらでわかる世界の地震情報 <br> <span style="color: var(--main-color);">手のひらでわかる世界の地震情報</span>', // ¡SPAN AÑADIDO y estilo INLINE para color crimson!
         texto_principal: "最新の地震データを入手し、自分自身と愛する人を守る方法を学びましょう。",
         boton_mapa: "インタラクティブマップを見る",
         inicio: "ホーム",
@@ -444,7 +445,7 @@ const translations = {
         descargar_pdf: "PDFをダウンロード",
         copyright: "© %{year} グローバル地震情報センター。無断複写・転載を禁じます。",
         alerta_titulo: "重大な地震アラート！",
-        alerta_significativo: "%{lugar}でマグニチュード%{magnitude}の【重大な】地震を検知しました！地図を確認して、最新情報を入手してください。",
+        alerta_significativo: '%{lugar}でマグニチュード%{magnitude}の【重大な】地震を検知しました！地図を確認して、最新情報を入手してください。', // ¡SPAN AÑADIDO!
         alerta_cercano: "近くで地震の可能性！あなたの位置付近でマグニチュード%{magnitude}の揺れを検知しました。",
         popup_magnitud: "マグニチュード",
         popup_ubicacion: "場所",
@@ -460,7 +461,7 @@ const translations = {
     },
      de: {
         titulo_pagina: "Globales Seismisches Informationszentrum",
-        titulo_principal: "Globale Erdbebeninformationen zum Greifen nah",
+        titulo_principal: 'Globale Erdbebeninformationen <br> zum <span>Greifen nah</span>',
         texto_principal: "Bleiben Sie auf dem Laufenden mit den neuesten seismischen Daten und lernen Sie, wie Sie sich und Ihre Lieben schützen können.",
         boton_mapa: "Interaktive Karte Anzeigen",
         inicio: "Startseite",
@@ -508,7 +509,7 @@ const translations = {
         descargar_pdf: "PDF Herunterladen",
         copyright: "© %{year} Globales Seismisches Informationszentrum. Alle Rechte vorbehalten.",
         alerta_titulo: "Wichtige Erdbebenwarnung!",
-        alerta_significativo: "WICHTIGES Erdbeben der Magnitude %{magnitude} in %{lugar} entdeckt! Überprüfen Sie die Karte und bleiben Sie informiert.",
+        alerta_significativo: 'WICHTIGES Erdbeben der Magnitude %{magnitude} in %{lugar} entdeckt! Überprüfen Sie die Karte und bleiben Sie informiert.',
         alerta_cercano: "Mögliches Erdbeben in der Nähe! Beben der Magnitude %{magnitude} in der Nähe Ihres Standorts entdeckt.",
         popup_magnitud: "Magnitude",
         popup_ubicacion: "Ort",
@@ -522,150 +523,87 @@ const translations = {
         distribucion_magnitudes_chart_title: "Verteilung der Magnituden",
         distribucion_profundidad_chart_title: "Tiefenverteilung"
 
-    },
-    it: {
-        titulo_pagina: "Centro di Informazione Sismica Globale",
-        titulo_principal: "Informazioni Globali sui Terremoti a Portata di Mano",
-        texto_principal: "Rimani aggiornato con gli ultimi dati sismici e impara come proteggere te stesso e i tuoi cari.",
-        boton_mapa: "Visualizza Mappa Interattiva",
-        inicio: "Home",
-        estadisticas: "Statistiche",
-        noticias: "Notizie",
-        consejos: "Consigli",
-        mapa_terremotos: "Mappa dei Terremoti Recenti",
-        magnitud_minima: "Magnitudo Minima:",
-        periodo: "Periodo di Tempo:",
-        ultima_hora: "Ultima Ora",
-        ultimo_dia: "Ultimo Giorno",
-        ultima_semana: "Ultima Settimana",
-        ultimo_mes: "Ultimo Mese",
-        estilo_mapa: "Stile Mappa:",
-        calles: "Strade",
-        satelite: "Satellite",
-        terreno: "Terreno",
-        estadisticas_terremotos: "Statistiche Terremoti",
-        total: "Totale",
-        promedio: "Media",
-        maximo: "Massimo",
-        ultimas_24h: "Ultime 24 Ore",
-        distribucion_magnitudes: "Distribuzione delle Magnitudo",
-        numero_terremotos_label_y: "Numero di Terremoti",
-        magnitud_label_x_magnitude: "Magnitudo",
-        magnitud_tiempo: "Magnitudo nel Tempo",
-        magnitud_tiempo_chart_title: "Magnitudo dei Terremoti nel Tempo",
-        fecha_label_x_timeseries: "Data",
-        magnitud_label_y_timeseries: "Magnitudo",
-        distribucion_profundidad: "Distribuzione della Profondità",
-        distribucion_profundidad_chart_title: "Distribuzione dei Terremoti per Profondità",
-        ultimos_terremotos: "Ultimi Terremoti",
-        noticias_sismicas: "Notizie Sismiche",
-		latest_quake_magnitude: "Magnitudo",
-        no_noticias: "Nessuna notizia recente da mostrare.",
-        consejos_seguridad: "Consigli di Sicurezza",
-        antes_terremoto: "Prima",
-        durante_terremoto: "Durante",
-        despues_terremoto: "Dopo",
-        kit_emergencia: "Kit di Emergenza",
-        recursos_educativos: "Risorse Educative",
-        texto_recursos_videos: "Scopri di più sui terremoti e come prepararsi.",
-        ver_videos: "Guarda Video",
-        texto_recursos_guia: "Scarica la nostra guida completa alla preparazione ai terremoti.",
-        descargar_pdf: "Scarica PDF",
-        copyright: "© %{year} Centro di Informazione Sismica Globale. Tutti i diritti riservati.",
-        alerta_titulo: "Allerta Terremoto Significativo!",
-        alerta_significativo: "Terremoto SIGNIFICATIVO di magnitudo %{magnitude} rilevato in %{lugar}! Controlla la mappa e rimani informato.",
-        alerta_cercano: "Possibile terremoto nelle vicinanze! Tremore di magnitudo %{magnitude} rilevato vicino alla tua posizione.",
-        popup_magnitud: "Magnitudo",
-        popup_ubicacion: "Posizione",
-        popup_profundidad: "Profondità",
-        popup_fecha: "Data",
-        leer_mas: "Leggi di più",
-        antes_terremoto_detalles: "Metti in sicurezza oggetti alti, prepara un kit di emergenza e stabilisci un piano familiare.",
-        durante_terremoto_detalles: "Mettiti sotto un tavolo robusto, stai lontano da finestre e muri esterni.",
-        despues_terremoto_detalles: "Verifica se ci sono feriti, controlla gas ed elettricità, aspetta scosse di assestamento.",
-        kit_emergencia_detalles: "Acqua, cibo non deperibile, radio, torcia, kit di pronto soccorso.",
-        distribucion_magnitudes_chart_title: "Distribuzione delle Magnitudo",
-        distribucion_profundidad_chart_title: "Distribuzione della Profondità"
     }
 };
 
 function translatePage(language) {
-    console.log("Función translatePage llamada con el idioma:", language); // Función translatePage llamada con el idioma:
+    console.log("Función translatePage llamada con el idioma:", language);
 
     const elements = document.querySelectorAll('[data-i18n]');
-    console.log("Elementos encontrados con data-i18n:", elements.length); // Elementos encontrados con data-i18n:
+    console.log("Elementos encontrados con data-i18n:", elements.length);
 
     elements.forEach(element => {
         const key = element.getAttribute('data-i18n');
-        console.log("  Traducción del elemento con la clave:", key); //   Traducción del elemento con la clave:
+        console.log("  Traducción del elemento con la clave:", key);
         if (translations[language] && translations[language][key]) {
             let translation = translations[language][key];
             if (key === 'copyright') {
                 translation = translation.replace('%{year}', new Date().getFullYear());
             }
-            element.textContent = translation;
+            element.innerHTML = translation; // ¡¡¡CAMBIADO A innerHTML!!!
             if (element.placeholder) {
                 element.placeholder = translation;
             }
         } else {
-            console.log("Traducción no encontrada para la clave:", key, "en el idioma:", language); //   Traducción no encontrada para la clave:, en el idioma:
+            console.log("Traducción no encontrada para la clave:", key, "en el idioma:", language);
         }
     });
 
     // **RE-TRADUCIR EL MENSAJE DE ALERTA SI ACTIVO - DEPURACIÓN ULTRA-DETALLADA**
     const alertElement = document.getElementById('earthquakeAlert');
     if (!alertElement.classList.contains('hidden')) {
-        console.log("  Alerta activa detectada, re-traducción del mensaje en curso..."); //   Alerta activa detectada, re-traducción del mensaje en curso...
+        console.log("  Alerta activa detectada, re-traducción del mensaje en curso...");
         const alertDetails = document.getElementById('alertDetails');
         let alertMessage = alertDetails.textContent;
-        console.log("    Mensaje de alerta actual (antes de la re-traducción):", alertMessage); //     Mensaje de alerta actual (antes de la re-traducción):
+        console.log("    Mensaje de alerta actual (antes de la re-traducción):", alertMessage);
 
         // Determinar si es alerta significativa o cercana
         if (alertMessage.includes(translations[document.getElementById('language-selector').value].alerta_significativo.split(' ')[0])) {
-            console.log("    Tipo de alerta detectado: Alerta Significativa"); //     Tipo de alerta detectado: Alerta Significativa
-            // Re-generar mensaje de alerta significativa traducido
-            const currentEarthquakeMag = alertMessage.match(/[\d.]+/)[0];
-            const currentEarthquakePlace = alertMessage.substring(alertMessage.indexOf('en') + 3).split('!')[0].trim();
+            console.log("    Re-traducir como alerta significativa");
+            // Reconstruir el mensaje de alerta significativa
+            let magnitudeMatch = alertMessage.match(/(\d+(\.\d+)?)/); // Buscar magnitud (número decimal)
+            let lugarMatch = alertMessage.match(/en (.+?)!/); // Buscar lugar (entre "en" y "!")
 
-            console.log("    Magnitud extraída del mensaje actual:", currentEarthquakeMag); //     Magnitud extraída del mensaje actual:
-            console.log("    Ubicación extraída del mensaje actual:", currentEarthquakePlace); //     Ubicación extraída del mensaje actual:
-            console.log("    Etiqueta traducida 'Magnitude':", translations[language].popup_magnitud); //     Etiqueta traducida 'Magnitude':
-            console.log("    Etiqueta traducida 'Ubicación':", translations[language].popup_ubicacion); //     Etiqueta traducida 'Ubicación':
+            if (magnitudeMatch && lugarMatch) {
+                let magnitude = magnitudeMatch[0];
+                let lugar = lugarMatch[1];
 
+                const translatedSignificantAlert = translations[document.getElementById('language-selector').value].alerta_significativo;
+                let newAlertMessage = translatedSignificantAlert
+                    .replace('%{magnitude}', magnitude)
+                    .replace('%{lugar}', lugar);
 
-            let translatedAlertMessage = translations[language].alerta_significativo
-                .replace('%{magnitude}', translations[language].popup_magnitud + " " + currentEarthquakeMag)
-                .replace('%{lugar}', translations[language].popup_ubicacion + " " + currentEarthquakePlace);
+                alertDetails.innerHTML = newAlertMessage; // Usar innerHTML también aquí por consistencia
+                console.log("    Mensaje de alerta re-traducido a:", newAlertMessage);
+            } else {
+                console.warn("    No se pudieron extraer magnitud o lugar del mensaje de alerta significativa para la re-traducción.");
+            }
 
-            alertDetails.textContent = translatedAlertMessage;
-            console.log("    Mensaje de alerta significativa re-traducido (ES):", translatedAlertMessage); //     Mensaje de alerta significativa re-traducido (ES):
 
         } else if (alertMessage.includes(translations[document.getElementById('language-selector').value].alerta_cercano.split(' ')[0])) {
-            console.log("    Tipo de alerta detectado: Alerta Cercana"); //     Tipo de alerta detectado: Alerta Cercana
-            // Re-generar mensaje de alerta cercana traducido
-            const currentNearbyEarthquakeMag = alertMessage.match(/[\d.]+/)[0];
-            console.log("    Magnitud extraída del mensaje actual (alerta cercana):", currentNearbyEarthquakeMag); //     Magnitud extraída del mensaje actual (alerta cercana):
-            console.log("    Etiqueta traducida 'Magnitude':", translations[language].popup_magnitud); //     Etiqueta traducida 'Magnitude':
+            console.log("    Re-traducir como alerta cercana");
+            // Reconstruir el mensaje de alerta cercana
+            let magnitudeCercanoMatch = alertMessage.match(/(\d+(\.\d+)?)/); // Buscar magnitud (número decimal)
 
-            let translatedAlertCercanoMessage = translations[language].alerta_cercano
-                .replace('%{magnitude}', translations[language].popup_magnitud + " " + currentNearbyEarthquakeMag);
+            if (magnitudeCercanoMatch) {
+                let magnitudeCercano = magnitudeCercanoMatch[0];
 
-            alertDetails.textContent = translatedAlertCercanoMessage;
-            console.log("    Mensaje de alerta cercana re-traducido (ES):", translatedAlertCercanoMessage); //     Mensaje de alerta cercana re-traducido (ES):
+                const translatedCercanoAlert = translations[document.getElementById('language-selector').value].alerta_cercano;
+                let newCercanoAlertMessage = translatedCercanoAlert
+                    .replace('%{magnitude}', magnitudeCercano);
+
+
+                alertDetails.innerHTML = newCercanoAlertMessage; // Usar innerHTML también aquí por consistencia
+                console.log("    Mensaje de alerta re-traducido a:", newCercanoAlertMessage);
+            } else {
+                console.warn("    No se pudo extraer la magnitud del mensaje de alerta cercana para la re-traducción.");
+            }
         } else {
-            console.warn("    Tipo de mensaje de alerta no reconocido para la re-traducción."); //     Tipo de mensaje de alerta no reconocido para la re-traducción.
+            console.warn("    Tipo de alerta no reconocido para la re-traducción o no es ninguna alerta de terremoto.");
         }
+    } else {
+        console.log("  No hay alerta activa, no es necesaria la re-traducción.");
     }
-
-    // Re-renderizar los gráficos y el mapa (sin cambios)
-    if (currentEarthquakesData) {
-        createMagnitudeChart(currentEarthquakesData);
-        createTimeSeriesChart(currentEarthquakesData);
-        createDepthChart(currentEarthquakesData);
-        displayEarthquakes(currentEarthquakesData, parseFloat(document.getElementById('magnitudeFilter').value));
-    }
-
-    console.log("Función translatePage terminada para el idioma:", language); // Función translatePage terminada para el idioma:
 }
 
 function showTipDetails(tip) {
@@ -1236,24 +1174,6 @@ async function initializePage() {
 
         setInterval(updateEarthquakeData, 300000);
         setInterval(fetchEarthquakeNews, 900000);
-
-		const magnitudeFilter = document.getElementById('magnitudeFilter');
-		const magnitudeValueSpan = document.getElementById('magnitudeValue');
-		const maxMagnitudeValue = magnitudeFilter.max; // Obtener el valor máximo del atributo 'max'
-
-		if (magnitudeFilter && magnitudeValueSpan) {
-			magnitudeFilter.addEventListener('input', function() {
-            magnitudeValueSpan.textContent = magnitudeFilter.value;
-            // Calcular el porcentaje de relleno
-            const fillPercentage = (magnitudeFilter.value / maxMagnitudeValue) * 100;
-            magnitudeFilter.style.backgroundImage = `linear-gradient(to right, var(--black) 0%, var(--black) ${fillPercentage}%, var(--whiteSmoke) ${fillPercentage}%, var(--whiteSmoke) 100%)`;
-        });
-			// Inicializar el gradiente al cargar la página (valor inicial del slider)
-			const initialFillPercentage = (magnitudeFilter.value / maxMagnitudeValue) * 100;
-			magnitudeFilter.style.backgroundImage = `linear-gradient(to right, var(--black) 0%, var(--black) ${initialFillPercentage}%, var(--whiteSmoke) ${initialFillPercentage}%, var(--whiteSmoke) 100%)`;
-		} else {
-			console.error("No se encontraron los elementos magnitudeFilter o magnitudeValue. Verifica los IDs en tu HTML.");
-		}
 
         const languageSelector = document.getElementById('language-selector');
         languageSelector.addEventListener('change', function() {
