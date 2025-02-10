@@ -1,8 +1,7 @@
-
+![image](https://github.com/user-attachments/assets/f80faa7b-1b2f-4d2e-82ad-7c84dc1b7236)
 
 # Seismic Global Information Center <img src="img/favicon.png" width="95" height="95" align="right" />
 
-[![Website Status](https://img.shields.io/website/http/yourwebsite.com?up_message=Online&down_message=Offline&label=Status)](https://fl2on.github.io/SismoGlobal/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)  [![Built With HTML, CSS, JavaScript](https://img.shields.io/badge/Built%20with-HTML%20%7C%20CSS%20%7C%20JavaScript-orange)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![Leaflet](https://img.shields.io/badge/Map-Leaflet-0078A8?logo=leaflet&logoColor=white)](https://leafletjs.com/)
 [![Chart.js](https://img.shields.io/badge/Charts-Chart.js-FF6384?logo=chart.js&logoColor=white)](https://www.chartjs.org/)
