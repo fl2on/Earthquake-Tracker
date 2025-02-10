@@ -1237,6 +1237,23 @@ async function initializePage() {
         setInterval(updateEarthquakeData, 300000);
         setInterval(fetchEarthquakeNews, 900000);
 
+		const magnitudeFilter = document.getElementById('magnitudeFilter');
+		const magnitudeValueSpan = document.getElementById('magnitudeValue');
+		const maxMagnitudeValue = magnitudeFilter.max; // Obtener el valor máximo del atributo 'max'
+
+		if (magnitudeFilter && magnitudeValueSpan) {
+			magnitudeFilter.addEventListener('input', function() {
+            magnitudeValueSpan.textContent = magnitudeFilter.value;
+            // Calcular el porcentaje de relleno correctamente
+            const fillPercentage = (magnitudeFilter.value / maxMagnitudeValue) * 100;
+            magnitudeFilter.style.backgroundImage = `linear-gradient(to right, var(--black) 0%, var(--black) ${fillPercentage}%, var(--whiteSmoke) ${fillPercentage}%, var(--whiteSmoke) 100%)`;
+        });
+			// Inicializar el gradiente al cargar la página (valor inicial del slider)
+			const initialFillPercentage = (magnitudeFilter.value / maxMagnitudeValue) * 100;
+			magnitudeFilter.style.backgroundImage = `linear-gradient(to right, var(--black) 0%, var(--black) ${initialFillPercentage}%, var(--whiteSmoke) ${initialFillPercentage}%, var(--whiteSmoke) 100%)`;
+		} else {
+			console.error("No se encontraron los elementos magnitudeFilter o magnitudeValue. Verifica los IDs en tu HTML.");
+		}
 
         const languageSelector = document.getElementById('language-selector');
         languageSelector.addEventListener('change', function() {

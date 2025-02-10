@@ -274,3 +274,102 @@ nav .container {
     align-items: center;
     justify-content: space-between;
 }
+
+/* Estilos personalizados para el control deslizante (range input) - CON RELLENO CRIMSON */
+.custom-slider {
+    -webkit-appearance: none; /* Elimina estilos por defecto de navegadores WebKit (Chrome, Safari) */
+    -moz-appearance: none;    /* Elimina estilos por defecto de Firefox */
+    appearance: none;         /* Elimina estilos por defecto genérico */
+    width: 100%;              /* Ancho completo del contenedor */
+    height: 8px;              /* Altura del track (barra) del slider */
+    background: var(--whiteSmoke); /* Color de fondo del track (barra) - base gris claro */
+    border-radius: 5px;       /* Bordes redondeados para el track */
+    outline: none;            /* Elimina el outline por defecto al enfocar */
+    -webkit-transition: .2s;  /* Transición suave para navegadores WebKit */
+    transition: opacity .2s;   /* Transición suave para otros navegadores */
+    cursor: pointer;          /* Cursor de "mano" al pasar por encima */
+    /*  Para el relleno crimson en WebKit (Chrome, Safari) - USANDO GRADIENTE LINEAL */
+    background-image: linear-gradient(to right, var(--black) 0%, var(--black) 0%, var(--black) 0%, var(--black) 100%);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.custom-slider:hover {
+    opacity: 1;               /* Opacidad completa al hacer hover (si quieres un efecto de hover) */
+}
+
+.custom-slider::-webkit-slider-thumb { /* Estilos para el "pulgar" (thumb) en navegadores WebKit */
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;               /* Ancho del "pulgar" */
+    height: 20px;              /* Alto del "pulgar" */
+    background: var(--black); /* Color de fondo del "pulgar" - color principal (crimson) */
+    cursor: pointer;          /* Cursor de "mano" en el "pulgar" */
+    border-radius: 50%;        /* Forma redonda para el "pulgar" */
+    border: 2px solid var(--black); /* Borde blanco para destacar el "pulgar" */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4); /* Sombra sutil para el "pulgar" */
+    transition: transform 0.2s ease-in-out; /* Transición suave para hover y active */
+    /*  Para que el "pulgar" no tape el relleno crimson -  MISMO COLOR DE FONDO QUE EL BODY */
+    background-clip: padding-box; /* Importante para que el padding-box no afecte el color de fondo */
+    -webkit-box-shadow: inset -1px 0 0 var(--black), inset 0 0 0 9999px var(--black); /* Sombra interna para "cortar" el fondo del pulgar y revelar el relleno */
+    box-shadow: inset -1px 0 0 var(--black), inset 0 0 0 9999px var(--black); /* Sombra interna para "cortar" el fondo del pulgar y revelar el relleno */
+    -webkit-background-color: var(--black) !important; /* Color de fondo del pulgar -  NEGRO para "cortar" */
+    background-color: var(--black) !important; /* Color de fondo del pulgar - NEGRO para "cortar" */
+}
+
+.custom-slider::-moz-range-track { /* Estilos para el track en Firefox - NECESARIO PARA RELLENO */
+    background: var(--black);  /* Color base del track en Firefox */
+    border-radius: 5px;         /* Bordes redondeados en Firefox */
+    height: 8px;                /* Altura del track en Firefox */
+}
+
+
+.custom-slider::-moz-range-progress { /* Estilos para el RELLENO en Firefox */
+    background-color: var(--black); /* ¡RELLENO CRIMSON en Firefox! */
+    border-radius: 5px;         /* Bordes redondeados para el relleno en Firefox */
+    height: 8px;                /* Altura del relleno en Firefox - igual que el track */
+}
+
+
+.custom-slider::-moz-range-thumb { /* Estilos para el "pulgar" en Firefox */
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--black);
+    cursor: pointer;
+    border-radius: 50%;
+    border: 2px solid var(--white);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease-in-out;
+}
+
+
+.custom-slider::-webkit-slider-thumb:hover,
+.custom-slider::-moz-range-thumb:hover {
+    transform: scale(1.1); /* Ligeramente más grande al hacer hover */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.6); /* Sombra más pronunciada en hover */
+}
+
+.custom-slider::-webkit-slider-thumb:active,
+.custom-slider::-moz-range-thumb:active {
+    transform: scale(0.95); /* Ligeramente más pequeño al hacer clic */
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5) inset; /* Sombra interna al hacer clic */
+}
+
+.custom-slider:focus {
+    box-shadow: 0 0 0 3px var(--black); /* Resaltado visual al enfocar con tabulador */
+    border-color: var(--black);
+    outline: none;
+}
+
+.custom-slider:focus::-webkit-slider-thumb, /* Asegura que el focus se vea también en el "pulgar" en WebKit */
+.custom-slider:focus::-moz-range-thumb {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6), 0 0 0 3px var(--black);
+}
+
+background-clip: padding-box;
+-webkit-box-shadow: inset -1px 0 0 var(--black), inset 0 0 0 9999px var(--black);
+box-shadow: inset -1px 0 0 var(--black), inset 0 0 0 9999px var(--black);
+-webkit-background-color: var(--black) !important;
+background-color: var(--black) !important;
