@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+:root {
+    --mainColor: crimson;
+    --black: #000000;
+    --white: #FFFFFF;
+    --whiteSmoke: #C4C3CA;
+    --shadow: 0px 4px 8px 0 rgba(21, 21, 21, .2);
+
+    --h2-font-size: 50px;
+    --h2-line-height: 55px;
+}
+
+/* Ajuste general para subir los elementos */
+body {
+    margin-top: -30px;
+}
+
+/* NAV */
+nav {
+    width: 100%;
+    background-color: var(--black);
+    position: fixed;
+    z-index: 999;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav .logo {
+    color: var(--white);
+    font-size: 32px;
+    font-weight: 600;
+    text-transform: capitalize;
+    display: flex;
+    align-items: center;
+}
+nav .logo span {
+    color: var(--mainColor);
+}
+
+nav ul {
+    display: flex; /* Muestra el menú horizontalmente en escritorio (por defecto) */
+    gap: 15px;
+}
+nav ul li {
+    margin: 0;
+    list-style: none;
+}
+nav ul li a {
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 600;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: all .3s ease;
+    text-decoration: none;
+}
+nav ul li a:hover {
+    color: var(--mainColor);
+    background: none;
+}
+
+/* Menu button (hamburger icon) styles - OCULTO por defecto en escritorio */
+.navbar .menu-btn {
+    display: none;
+    align-items: center;
+}
+
+.navbar .menu-btn i {
+    vertical-align: middle;
+}
+
+
+/* MAIN SECTION Ajustes generales */
+section {
+    padding-top: 50px;
+}
+.full-screen {
+    min-height: 100vh;
+    padding: 50px 0 0;
+}
+
+.left, .right {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 10px;
+}
+
+.left h2 {
+    margin-top: 15px;
+    font-size: var(--h2-font-size);
+    color: var(--white);
+    line-height: var(--h2-line-height);
+}
+.left h2 span {
+    color: var(--mainColor);
+}
+
+.btn {
+    height: 44px;
+    padding: 0px 30px;
+    background-color: var(--mainColor);
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+    letter-spacing: 1px;
+    border: none;
+    margin-top: 15px;
+    box-shadow: 0px 8px 24px 0 rgba(228, 10, 57, .2);
+    transition: all .2s linear;
+}
+.btn:hover {
+    background-color: var(--white);
+    color: var(--mainColor);
+    box-shadow: 0 8px 24px 0 rgba(138, 140, 146, .2);
+}
+
+/* Consejos de Seguridad en vertical */
+#consejos-seguridad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+    padding: 30px;
+}
+#consejos-seguridad h2 {
+    font-size: 32px;
+    color: var(--mainColor);
+}
+#consejos-seguridad p {
+    font-size: 16px;
+    color: var(--whiteSmoke);
+    max-width: 600px;
+}
+
+/* Ajuste de espaciado en la barra de navegación */
+nav .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* MEDIA QUERIES - Estilos para pantallas PEQUEÑAS (móviles) */
+@media (max-width: 992px) {
+    nav ul {
+        display: none; /* OCULTA el menú horizontal en móviles */
+        position: fixed;
+        top: 85px;
+        left: -100%;
+        background-color: #1B1B1B;
+        height: auto;
+        width: 100%;
+        flex-direction: column;
+        padding: 20px;
+        text-align: center;
+        transition: all .3s ease;
+    }
+
+    nav .menu-btn {
+        display: block; /* MUESTRA el botón hamburguesa en móviles */
+    }
+
+    #click:checked ~ ul {
+        left: 0; /* Desplaza el menú lateral a la vista al marcar el checkbox */
+        display: flex; /* Asegura que se visualice como flex para el diseño vertical */
+        flex-direction: column; /* Redundancia para asegurar el diseño vertical */
+    }
+
+    nav ul li {
+        margin: 20px 0;
+    }
+    nav ul li a {
+        display: block;
+        font-size: 20px;
+    }
+    .left h2 {
+        font-size: 40px;
+    }
+    .left h2 span {
+        font-size: 42px;
+    }
+    .left p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .left, .right {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .left {
+        display: grid;
+        place-items: center;
+        order: 2;
+    }
+    .right {
+        order: 1;
+    }
+    .left h2 {
+        text-align: center;
+        font-size: 2.5rem;
+        line-height: 2.8rem;
+    }
+    .left p, .social-media {
+        text-align: center;
+    }
+    .social-media {
+        margin: 20px 0;
+    }
+}
+
+@media (max-width: 400px) {
+    .left h2 {
+        font-size: 28px;
+        line-height: 32px;
+    }
+    .left h2 span {
+        font-size: 30px;
+    }
+}
+
+#magnitudeChart, #timeSeriesChart, #depthChart {
+    height: 300px;
+    max-height: 300px;
+}
+
+#info {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#earthquakeMap {
+    height: 400px;
+    width: 100%;
+    z-index: 1;
+}
+
+/* Consejos de Seguridad en vertical (CSS existente - se mantiene) */
+#consejos-seguridad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+    padding: 30px;
+}
+#consejos-seguridad h2 {
+    font-size: 32px;
+    color: var(--mainColor);
+}
+#consejos-seguridad p {
+    font-size: 16px;
+    color: var(--whiteSmoke);
+    max-width: 600px;
+}
+
+/* Eliminación de la zona de contactos (CSS existente - se mantiene) */
+#contactos {
+    display: none;
+}
+
+/* Ajuste de espaciado en la barra de navegación (CSS existente - se mantiene) */
+nav .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

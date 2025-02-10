@@ -1,292 +1,243 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="es" class="dark">
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Earthquakes of the Week</title>
-    
-    <!-- Tailwind CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-   crossorigin=""/>
-    <!-- Chart.js -->
+    <title data-i18n="titulo_pagina">Centro de Información Sísmica Global</title>
+    <link rel="icon" href="img/favicon.png" type="image/x-icon">
+    <meta name="description" content="Centro de Información Sísmica Global. Información sísmica en tiempo real, mapas interactivos, estadísticas detalladas y noticias relevantes sobre terremotos a nivel mundial.">
+    <meta name="keywords" content="sismos, terremotos, землетрясения, Erdbeben, séismes, terremoti, 地震, 地震情報, información sísmica global, mapa de terremotos, noticias de sismos, datos sísmicos en tiempo real, estadísticas de terremotos, prevención de terremotos, seguridad sísmica">
+    <meta name="author" content="fl2on">
+    <meta property="og:title" content="Centro de Información Sísmica Global">
+    <meta property="og:description" content="Mantente al día con la información más reciente sobre terremotos a nivel mundial. Mapas, estadísticas y noticias en un solo lugar.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="img/logo.png">
+    <meta property="og:url" content="img/logo.png">
+    <meta name="theme-color" content="#crimson">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-   crossorigin=""></script>
-
-    <!-- Moment.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-</head>
-<body class="bg-gray-100 text-gray-800">
-    <div class="container mx-auto p-4">
-        <h1 class="text-2xl font-semibold mb-2">Earthquakes of the Week</h1>
-		<div class="flex space-x-2 mb-4" style="display: flex; align-items: stretch;">
-            <div class="w-1/2">
-                <div class="bg-white p-2 rounded shadow">
-                    <h2 class="text-md font-semibold mb-1 text-gray-800">Filters</h2>
-                    <label class="block mb-1 text-gray-800">Start date</label>
-                    <input type="date" id="date-start" class="w-full p-1 mb-2 rounded shadow text-sm font-semibold mb-2 text-gray-800">
-                    <label class="block mb-1 text-gray-800">End date</label>
-                    <input type="date" id="date-end" class="w-full p-1 mb-2 rounded shadow text-sm font-semibold mb-2 text-gray-800">
-                    <button class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold p-1 rounded" id="btn">Show</button>
-                </div>
-            </div>
-	<div class="w-1/2">
-	 	<div class="bg-white p-2 rounded shadow">
-		   <h2 class="text-md font-semibold mb-1 text-gray-800">Statistics</h2>
-		   <div id="statistics" class="text-center text-sm text-gray-800"></div><div>
-		   <canvas id="myChart" style="width: 95%; height: 78px;"></canvas>
-		</div>
-	     </div>
-	   </div>
-	</div>
-        <div class="bg-white p-2 rounded shadow mb-4">
-            <h2 class="text-md font-semibold mb-1 text-gray-800">Earthquake Map</h2>
-            <div id="issMap" class="h-44"></div>
-        </div>
-        <div class="bg-white p-2 rounded shadow mb-4">
-            <h2 class="text-md font-semibold mb-1 text-gray-800">Latest Earthquakes</h2>
-            <div id="latestEarthquakes" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 text-xs text-gray-800">
-            </div>
-        </div>
-        <div class="bg-white p-2 rounded shadow">
-            <h2 class="text-md font-semibold mb-1 text-gray-800">List of Earthquakes</h2>
-            <div id="earthquakeData" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 text-xs text-gray-800">
-            </div>
-        </div>
-    </div>
-	<script type="text/javascript">
-        // Establecer las fechas de inicio y fin en la semana actual
-        const today = new Date();
-        const startDate = new Date(today);
-        startDate.setDate(today.getDate() - 7);
-        const startDateFormatted = startDate.toISOString().split('T')[0];
-        const todayFormatted = today.toISOString().split('T')[0];
-        document.getElementById('date-start').value = startDateFormatted;
-        document.getElementById('date-end').value = todayFormatted;
-
-        // Mapa y fondo (tiles)
-        const mymap = L.map('issMap').setView([0, 0], 1.5);
-        const attribution = 'Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-        const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-        const tiles = L.tileLayer(tileUrl, { attribution });
-        tiles.addTo(mymap);
-
-        // Acceso a la API
-        const api_url = 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson';
-
-        async function getData() {
-            const startDate = document.getElementById('date-start').value;
-            const endDate = document.getElementById('date-end').value;
-            const apiUrl = `${api_url}&starttime=${startDate}&endtime=${endDate}`;
-
-            const response = await fetch(apiUrl);
-            const data = await response.json();
-            console.log(data);
-
-            // Limpia el mapa y la lista de terremotos
-            mymap.eachLayer(layer => {
-                if (layer !== tiles) {
-                    mymap.removeLayer(layer);
-                }
-            });
-            document.getElementById('earthquakeData').innerHTML = '';
-
-            // Estadísticas
-            const statistics = {
-                totalTerremotos: data.metadata.count,
-                promedioMagnitud: calculateAverageMagnitude(data.features),
-            };
-
-            // Mostrar estadísticas
-            const statisticsDiv = document.getElementById('statistics');
-            statisticsDiv.innerHTML = `
-                <p class="text-black">Total Earthquakes: ${statistics.totalTerremotos}</p>
-                <p class="text-black">Average Magnitude: ${statistics.promedioMagnitud}</p>
-            `;
-
-            // Mostrar terremotos en el mapa y la lista
-            for (let i = 0; i < data.features.length; i++) {
-                const earthquake = data.features[i];
-                const magnitude = earthquake.properties.mag;
-                const lat = earthquake.geometry.coordinates[1];
-                const lon = earthquake.geometry.coordinates[0];
-                const color = getColorByMagnitude(magnitude);
-
-                // Marcador en el mapa
-                const circle = L.circleMarker([lat, lon], {
-                    radius: magnitude * 3,
-                    color: 'transparent',
-                    fillColor: color,
-                    fillOpacity: 0.5,
-                }).addTo(mymap);
-
-                // Información en el mapa
-                const dateMs = new Date(earthquake.properties.time);
-                const date = dateMs.toUTCString();
-                circle.bindTooltip(`<h6>${earthquake.properties.place}</h6><p class="text-black">Magnitude: ${magnitude}</p><p class="text-black">${date}</p>`);
-
-                // Lista de terremotos
-                const earthquakeList = document.getElementById('earthquakeData');
-                const listItem = document.createElement('li');
-                listItem.innerHTML = `<strong>${earthquake.properties.place}</strong> (Magnitude: ${magnitude}) - ${date}`;
-                earthquakeList.appendChild(listItem);
-            }
-        }
-
-        // Calcular el promedio de magnitud de terremotos
-        function calculateAverageMagnitude(earthquakes) {
-            const totalMagnitudes = earthquakes.reduce((acc, curr) => acc + curr.properties.mag, 0);
-            return (totalMagnitudes / earthquakes.length).toFixed(2);
-        }
-
-        // Asignar colores según la magnitud del terremoto
-        function getColorByMagnitude(magnitude) {
-            if (magnitude < 4) {
-                return 'green';
-            } else if (magnitude < 6) {
-                return 'orange';
-            } else {
-                return 'red';
-            }
-        }
-
-        // Agregar un controlador de eventos al botón "Mostrar"
-        document.getElementById('btn').addEventListener('click', function (e) {
-            e.preventDefault(); // Evita que el formulario se envíe
-            getData();
-        });
-
-        // Agregar controladores de eventos para los cambios en las fechas
-        document.getElementById('date-start').addEventListener('change', getData);
-        document.getElementById('date-end').addEventListener('change', getData);
-
-        // Llamar automáticamente a getData al cargar la página
-        getData();
-
-        // Últimos terremotos
-        async function getLatestEarthquakes() {
-            const apiUrl = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson';
-            const response = await fetch(apiUrl);
-            const data = await response.json();
-
-            // Limpia la lista de últimos terremotos
-            document.getElementById('latestEarthquakes').innerHTML = '';
-
-            // Mostrar los últimos terremotos en la lista
-            for (let i = 0            ; i < data.features.length; i++) {
-                const earthquake = data.features[i];
-                const magnitude = earthquake.properties.mag;
-                const dateMs = new Date(earthquake.properties.time);
-                const date = dateMs.toUTCString();
-
-                // Lista de últimos terremotos
-                const earthquakeList = document.getElementById('latestEarthquakes');
-                const listItem = document.createElement('li');
-                listItem.innerHTML = `<strong>${earthquake.properties.place}</strong> (Magnitude: ${magnitude}) - ${date}`;
-                earthquakeList.appendChild(listItem);
-            }
-        }
-
-        // Llamar automáticamente a getLatestEarthquakes cada hora
-        getLatestEarthquakes();
-        setInterval(getLatestEarthquakes, 3600000);
-    </script>
-	    <script>
-        let currentGraph = null;
-        let currentGraphIndex = 0;
-
-        const graphData = [
-            {
-                label: 'Graph 1',
-                data: [0,0,0.1,0,0,0,0,0,0.1],
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1,
-                tension: 0.4,
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.0.0/dist/chartjs-adapter-moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              'main-color': 'crimson',
+              'black-color': '#000000',
+              'white-color': '#FFFFFF',
+              'white-smoke': '#C4C3CA',
+              'dark-1b': '#1B1B1B',
+              'dark-242323': '#242323',
+              primary: 'crimson',
+              secondary: '#C4C3CA',
+              background: '#000000',
+              surface: '#1B1B1B',
+              text: '#FFFFFF',
+              'text-secondary': '#C4C3CA',
             },
-            {
-                label: 'Graph 2',
-                data: [0.1, -0.1, -0.2, 0, -0.2, 0.1,0.4, 0.2, 0.2, 0.1],
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1,
-                tension: 0.4,
+            fontFamily: {
+              'lato': ['Lato', 'sans-serif'],
+              sans: ['Lato', 'sans-serif'],
             },
-            {
-                label: 'Graph 3',
-                data: [0.1,0,-0.1, 0.4   , 0.4, 0.3, 0.4, 0.5, 0.3, 0.5],
-                backgroundColor: 'rgba(255, 206, 86, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1,
-                tension: 0.4,
+            boxShadow: {
+              'custom': '0px 4px 8px 0 rgba(21, 21, 21, .2)',
+              'btn': '0px 8px 24px 0 rgba(228, 10, 57, .2)',
+              'btn-hover': '0 8px 24px 0 rgba(138, 140, 146, .2)',
+            },
+            fontSize: {
+              'h2': '50px',
+            },
+            lineHeight: {
+              'h2': '55px',
             }
-        ];
-
-        function showGraph() {
-            if (currentGraph !== null) {
-                currentGraph.destroy();
-            }
-
-            const canvas = document.getElementById('myChart');
-            const ctx = canvas.getContext('2d');
-
-            const data = graphData[currentGraphIndex];
-
-            currentGraph = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1'],
-                    datasets: [data]
-                },
-                options: {
-                    animation: false,
-                    scales: {
-                        y: {
-                            suggestedMin: -0.5,
-                            suggestedMax: 0.5,
-                            beginAtZero: true,
-                            grid: {
-                                display: false,
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false,
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            enabled: false
-                        }
-                    },
-                    elements: {
-                        point: {
-                            radius: 0
-                        }
-                    }
-                }
-            });
+          }
         }
-
-        function updateGraph() {
-            const data = graphData[currentGraphIndex];
-            data.data.push(data.data[0]);
-            data.data.shift();
-            showGraph();
-        }
-
-        window.onload = showGraph;
-        setInterval(updateGraph, 1000);
+      }
     </script>
-</body>
+  </head>
+  <body class="bg-background text-text font-sans">
+    <nav class="navbar bg-black-color fixed top-0 left-0 w-full z-50 py-4 shadow-md">
+      <div class="container mx-auto px-6">
+        <div class="row justify-content-between align-items-center flex flex-wrap">
+          <div class="logo text-white-color text-3xl font-semibold capitalize">Sismo <span data-i18n="global">Global</span>
+          </div>
+          <input type="checkbox" id="click" style="display: none;">
+          <label for="click" class="menu-btn lg:hidden">
+            <i class="fas fa-bars text-white-color text-2xl cursor-pointer"></i>
+          </label>
+          <ul class="hidden lg:flex space-x-5 ml-10 mt-2">
+            <li>
+              <a href="#mapa" class="nav-link text-white-color font-semibold px-4 py-2 rounded hover:text-main-color hover:bg-white-color transition-colors active" data-i18n="inicio">Inicio</a>
+            </li>
+            <li>
+              <a href="#estadisticas" class="nav-link text-white-color font-semibold px-4 py-2 rounded hover:text-main-color hover:bg-white-color transition-colors" data-i18n="estadisticas">Estadísticas</a>
+            </li>
+            <li>
+              <a href="#noticias" class="nav-link text-white-color font-semibold px-4 py-2 rounded hover:text-main-color hover:bg-white-color transition-colors" data-i18n="noticias">Noticias</a>
+            </li>
+            <li>
+              <a href="#consejos" class="nav-link text-white-color font-semibold px-4 py-2 rounded hover:text-main-color hover:bg-white-color transition-colors" data-i18n="consejos">Consejos</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <select id="language-selector" class="bg-surface border border-gray-800 text-white-smoke rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary absolute top-4 right-8">
+        <option value="es">Español</option>
+        <option value="en">English</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+        <option value="it">Italiano</option>
+        <option value="zh">中文</option>
+        <option value="ja">日本語</option>
+      </select>
+    </nav>
+    <section>
+      <div class="container mx-auto px-6 mt-5">
+        <div class="row full-screen align-items-center flex flex-wrap mt-20 lg:mt-0">
+          <div class="left flex-1 max-w-full lg:max-w-1/2 p-5 text-center">
+            <span class="line inline-block w-1/6 h-0.5 bg-main-color"></span>
+            <h2 class="text-h2 text-white-color leading-h2 mt-6" data-i18n="titulo_principal" style="font-size: var(--h2-font-size, 50px); line-height: var(--h2-line-height, 55px);">Información Sísmica Global <br> al <span>Alcance de tu Mano</span>
+            </h2>
+            <p class="text-white-smoke text-base mt-5 mb-3" data-i18n="texto_principal">Mantente actualizado con los últimos datos sísmicos, estadísticas y noticias de terremotos a nivel mundial. Información precisa y en tiempo real para tu seguridad y conocimiento.</p>
+            <div class="buttons mt-6">
+              <a href="#map-container" class="btn btn-primary mt-4 shadow-btn hover:bg-white-color hover:text-main-color hover:shadow-btn-hover" data-i18n="boton_mapa">Ver Mapa Interactivo</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <main class="container mx-auto px-6 py-8">
+      <div id="earthquakeAlert" class="bg-red-600 text-white p-4 rounded-lg mb-8 hidden animate-pulse">
+        <h3 class="text-xl font-bold mb-2" data-i18n="alerta_titulo">¡Alerta de Terremoto Significativo!</h3>
+        <p id="alertDetails"></p>
+      </div>
+      <section id="map-container" class="bg-surface rounded-lg p-6 shadow-custom">
+        <h2 class="text-xl font-semibold mb-4 text-white-color" data-i18n="mapa_terremotos">Mapa de Terremotos Recientes</h2>
+        <div class="flex flex-wrap gap-4 mb-4">
+          <div class="flex-1 min-w-[200px]">
+            <label for="magnitudeFilter" class="block text-sm font-medium text-text-secondary mb-1" data-i18n="magnitud_minima"> Magnitud mínima: <span id="magnitudeValue">0</span>
+            </label>
+            <input type="range" id="magnitudeFilter" min="0" max="9" value="0" step="0.1" class="custom-slider">
+          </div>
+          <div class="flex-1 min-w-[200px]">
+            <label for="timePeriod" class="block text-sm font-medium text-text-secondary mb-1" data-i18n="periodo">Periodo:</label>
+            <select id="timePeriod" class="w-full bg-surface border border-gray-800 text-white-smoke rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
+              <option value="hour" data-i18n="ultima_hora">Última Hora</option>
+              <option value="day" selected data-i18n="ultimo_dia">Último Día</option>
+              <option value="week" data-i18n="ultima_semana">Última Semana</option>
+              <option value="month" data-i18n="ultimo_mes">Último Mes</option>
+            </select>
+          </div>
+          <div class="flex-1 min-w-[200px]">
+            <label for="mapStyle" class="block text-sm font-medium text-text-secondary mb-1" data-i18n="estilo_mapa">Estilo del Mapa:</label>
+            <select id="mapStyle" class="w-full bg-surface border border-gray-800 text-white-smoke rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
+              <option value="streets" data-i18n="calles">Calles</option>
+              <option value="satellite" data-i18n="satelite">Satélite</option>
+              <option value="terrain" data-i18n="terreno">Terreno</option>
+            </select>
+          </div>
+        </div>
+        <div id="earthquakeMap" class="rounded-lg"></div>
+      </section>
+      <section id="estadisticas" class="bg-surface rounded-lg p-6 shadow-custom mt-8">
+        <h2 class="text-xl font-semibold mb-4 text-white-color" data-i18n="estadisticas_terremotos">Estadísticas de Terremotos</h2>
+        <div class="mb-6 grid grid-cols-2 gap-4">
+          <div class="text-center p-4 bg-dark-242323 rounded-lg shadow-custom mb-4">
+            <p class="text-3xl font-bold text-primary" id="totalQuakes">--</p>
+            <p class="text-sm text-text-secondary" data-i18n="total">Total</p>
+          </div>
+          <div class="text-center p-4 bg-dark-242323 rounded-lg shadow-custom mb-4">
+            <p class="text-3xl font-bold text-secondary" id="avgMagnitude">--</p>
+            <p class="text-sm text-text-secondary" data-i18n="promedio">Promedio</p>
+          </div>
+          <div class="text-center p-4 bg-dark-242323 rounded-lg shadow-custom mb-4">
+            <p class="text-3xl font-bold text-yellow-500" id="maxMagnitude">--</p>
+            <p class="text-sm text-text-secondary" data-i18n="maximo">Máximo</p>
+          </div>
+          <div class="text-center p-4 bg-dark-242323 rounded-lg shadow-custom mb-4">
+            <p class="text-3xl font-bold text-red-500" id="recentQuakes">--</p>
+            <p class="text-sm text-text-secondary" data-i18n="ultimas_24h">Últimas 24h</p>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="bg-dark-242323 p-4 rounded-lg shadow-custom">
+            <h3 class="text-lg font-semibold mb-2 text-white-color" data-i18n="distribucion_magnitudes">Distribución de Magnitudes</h3>
+            <canvas id="magnitudeChart"></canvas>
+          </div>
+          <div class="bg-dark-242323 p-4 rounded-lg shadow-custom">
+            <h3 class="text-lg font-semibold mb-2 text-white-color" data-i18n="magnitud_tiempo">Magnitud en el Tiempo</h3>
+            <canvas id="timeSeriesChart"></canvas>
+          </div>
+          <div class="bg-dark-242323 p-4 rounded-lg shadow-custom">
+            <h3 class="text-lg font-semibold mb-2 text-white-color" data-i18n="distribucion_profundidad">Distribución de Profundidad</h3>
+            <canvas id="depthChart"></canvas>
+          </div>
+        </div>
+      </section>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+        <section id="ultimos-terremotos" class="bg-surface rounded-lg p-6 shadow-custom">
+          <h2 class="text-xl font-semibold mb-4 text-white-color" data-i18n="ultimos_terremotos">Últimos Terremotos</h2>
+          <ul id="latestEarthquakes" class="space-y-2"></ul>
+        </section>
+        <section id="noticias" class="bg-surface rounded-lg p-6 shadow-custom">
+          <h2 class="text-xl font-semibold mb-4 text-white-color" data-i18n="noticias_sismicas">Noticias Sísmicas</h2>
+          <div id="newsContainer" class="space-y-4"></div>
+        </section>
+      </div>
+      <section id="consejos" class="bg-surface rounded-lg p-6 shadow-custom mt-8">
+        <h2 class="text-xl font-semibold mb-4 text-white-color" data-i18n="consejos_seguridad">Consejos de Seguridad</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="bg-dark-242323 p-4 rounded-lg text-center cursor-pointer hover:bg-gray-700 transition-colors shadow-custom mb-4" onclick="showTipDetails('Antes del Terremoto')">
+            <div class="text-4xl mb-2">🏠</div>
+            <h3 class="text-lg font-semibold text-white-color" data-i18n="antes_terremoto">Antes</h3>
+          </div>
+          <div class="bg-dark-242323 p-4 rounded-lg text-center cursor-pointer hover:bg-gray-700 transition-colors shadow-custom mb-4" onclick="showTipDetails('Durante del Terremoto')">
+            <div class="text-4xl mb-2">🛡️</div>
+            <h3 class="text-lg font-semibold text-white-color" data-i18n="durante_terremoto">Durante</h3>
+          </div>
+          <div class="bg-dark-242323 p-4 rounded-lg text-center cursor-pointer hover:bg-gray-700 transition-colors shadow-custom mb-4" onclick="showTipDetails('Después del Terremoto')">
+            <div class="text-4xl mb-2">🚑</div>
+            <h3 class="text-lg font-semibold text-white-color" data-i18n="despues_terremoto">Después</h3>
+          </div>
+          <div class="bg-dark-242323 p-4 rounded-lg text-center cursor-pointer hover:bg-gray-700 transition-colors shadow-custom mb-4" onclick="showTipDetails('Kit de Emergencia')">
+            <div class="text-4xl mb-2">🎒</div>
+            <h3 class="text-lg font-semibold text-white-color" data-i18n="kit_emergencia">Kit</h3>
+          </div>
+        </div>
+      </section>
+      <section class="bg-surface rounded-lg p-6 shadow-custom mt-8">
+        <h2 class="text-xl font-semibold mb-4 text-white-color" data-i18n="recursos_educativos">Recursos Educativos</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-dark-242323 p-4 rounded-lg shadow-custom">
+            <h3 class="text-lg font-semibold mb-2 text-white-color" data-i18n="videos_educativos">Videos Educativos</h3>
+            <p class="mb-4 text-text-secondary" data-i18n="texto_recursos_videos">Aprende más sobre terremotos y cómo prepararte.</p>
+            <a href="https://www.youtube.com/watch?v=dJpIU1rSOFY" target="_blank" class="bg-primary text-white-color px-4 py-2 rounded hover:bg-opacity-80 transition-colors inline-block shadow-custom" data-i18n="ver_videos">Ver Videos</a>
+          </div>
+          <div class="bg-dark-242323 p-4 rounded-lg shadow-custom">
+            <h3 class="text-lg font-semibold mb-2 text-white-color" data-i18n="guia_preparacion">Guía de Preparación</h3>
+            <p class="mb-4 text-text-secondary" data-i18n="texto_recursos_guia">Descarga nuestra guía completa de preparación para terremotos.</p>
+            <a href="https://www.aidteam.org/es/prepper-earthquakes/" target="_blank" class="bg-primary text-white-color px-4 py-2 rounded hover:bg-opacity-80 transition-colors inline-block shadow-custom" data-i18n="descargar_pdf">Descargar PDF</a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="bg-surface mt-12 py-8">
+      <div class="container mx-auto px-4 text-center text-text-secondary">
+        <p data-i18n="copyright">© Centro de Información Sísmica Global. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
+    <link href="https://cdn.jsdelivr.net/npm/material-icons@latest/iconfont/material-icons.css" rel="stylesheet">
+    <script src="js/script.js"></script>
+  </body>
 </html>
