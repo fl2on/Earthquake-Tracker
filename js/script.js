@@ -1250,3 +1250,20 @@ async function initializePage() {
 }
 
 document.addEventListener('DOMContentLoaded', initializePage);
+
+window.addEventListener('load', () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        console.log("Permiso de ubicación concedido.");
+      },
+      function(error) {
+        console.error("Error al obtener la ubicación:", error.message);
+        alert("Permiso de ubicación denegado o error al obtener la ubicación.");
+      }
+    );
+  } else {
+    console.error("Geolocalización no soportada por este navegador.");
+    alert("Geolocalización no soportada por este navegador.");
+  }
+});
