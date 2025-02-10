@@ -1244,7 +1244,7 @@ async function initializePage() {
 		if (magnitudeFilter && magnitudeValueSpan) {
 			magnitudeFilter.addEventListener('input', function() {
             magnitudeValueSpan.textContent = magnitudeFilter.value;
-            // Calcular el porcentaje de relleno correctamente
+            // Calcular el porcentaje de relleno
             const fillPercentage = (magnitudeFilter.value / maxMagnitudeValue) * 100;
             magnitudeFilter.style.backgroundImage = `linear-gradient(to right, var(--black) 0%, var(--black) ${fillPercentage}%, var(--whiteSmoke) ${fillPercentage}%, var(--whiteSmoke) 100%)`;
         });
