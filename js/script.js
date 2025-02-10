@@ -46,7 +46,7 @@ const translations = {
         distribucion_profundidad_chart_title: "Distribución de Terremotos por Profundidad",
         ultimos_terremotos: "Últimos Terremotos",
         noticias_sismicas: "Noticias Sísmicas",
-		latest_quake_magnitude: "Magnitud",
+	latest_quake_magnitude: "Magnitud",
         no_noticias: "No hay noticias recientes para mostrar.",
         consejos_seguridad: "Consejos de Seguridad",
         antes_terremoto: "Antes",
@@ -110,7 +110,7 @@ const translations = {
         distribucion_profundidad_chart_title: "Earthquake Distribution by Depth",
         ultimos_terremotos: "Latest Earthquakes",
         noticias_sismicas: "Seismic News",
-		latest_quake_magnitude: "Magnitude",
+	latest_quake_magnitude: "Magnitude",
         no_noticias: "No recent news to display.",
         consejos_seguridad: "Safety Tips",
         antes_terremoto: "Before",
@@ -174,7 +174,7 @@ const translations = {
         distribucion_profundidad_chart_title: "Distribution des Séismes par Profondeur",
         ultimos_terremotos: "Derniers Séismes",
         noticias_sismicas: "Actualités Sismiques",
-		latest_quake_magnitude: "Magnitude",
+	latest_quake_magnitude: "Magnitude",
         no_noticias: "Pas d'actualités récentes à afficher.",
         consejos_seguridad: "Conseils de Sécurité",
         antes_terremoto: "Avant",
@@ -238,7 +238,7 @@ const translations = {
         distribucion_profundidad_chart_title: "Erdbebenverteilung nach Tiefe",
         ultimos_terremotos: "Letzte Erdbeben",
         noticias_sismicas: "Seismische Nachrichten",
-		latest_quake_magnitude: "Magnitude",
+	latest_quake_magnitude: "Magnitude",
         no_noticias: "Keine aktuellen Nachrichten verfügbar.",
         consejos_seguridad: "Sicherheitstipps",
         antes_terremoto: "Vor dem Beben",
@@ -303,7 +303,7 @@ const translations = {
         distribucion_profundidad_chart_title: "Distribuzione dei Terremoti per Profondità",
         ultimos_terremotos: "Ultimi Terremoti",
         noticias_sismicas: "Notizie Sismiche",
-		latest_quake_magnitude: "Magnitudo",
+	latest_quake_magnitude: "Magnitudo",
         no_noticias: "Nessuna notizia recente da mostrare.",
         consejos_seguridad: "Consigli di Sicurezza",
         antes_terremoto: "Prima",
@@ -367,7 +367,7 @@ const translations = {
         distribucion_profundidad_chart_title: "按深度划分的地震分布",
         ultimos_terremotos: "最新地震",
         noticias_sismicas: "地震新闻",
-		latest_quake_magnitude: "震级",
+	latest_quake_magnitude: "震级",
         no_noticias: "没有最新消息可显示。",
         consejos_seguridad: "安全提示",
         antes_terremoto: "地震前",
@@ -431,7 +431,7 @@ const translations = {
         distribucion_profundidad_chart_title: "深度別の地震分布",
         ultimos_terremotos: "最新の地震",
         noticias_sismicas: "地震ニュース",
-		latest_quake_magnitude: "マグニチュード",
+	latest_quake_magnitude: "マグニチュード",
         no_noticias: "表示する最新ニュースはありません。",
         consejos_seguridad: "安全のヒント",
         antes_terremoto: "地震の前",
@@ -495,7 +495,7 @@ const translations = {
         distribucion_profundidad_chart_title: "Erdbebenverteilung nach Tiefe",
         ultimos_terremotos: "Letzte Erdbeben",
         noticias_sismicas: "Seismische Nachrichten",
-		latest_quake_magnitude: "Magnitude",
+	latest_quake_magnitude: "Magnitude",
         no_noticias: "Keine aktuellen Nachrichten verfügbar.",
         consejos_seguridad: "Sicherheitstipps",
         antes_terremoto: "Vor dem Beben",
@@ -528,7 +528,6 @@ const translations = {
 
 function translatePage(language) {
     console.log("Función translatePage llamada con el idioma:", language);
-
     const elements = document.querySelectorAll('[data-i18n]');
     console.log("Elementos encontrados con data-i18n:", elements.length);
 
@@ -540,7 +539,7 @@ function translatePage(language) {
             if (key === 'copyright') {
                 translation = translation.replace('%{year}', new Date().getFullYear());
             }
-            element.innerHTML = translation; // ¡¡¡CAMBIADO A innerHTML!!!
+            element.innerHTML = translation;
             if (element.placeholder) {
                 element.placeholder = translation;
             }
@@ -552,14 +551,14 @@ function translatePage(language) {
     // **RE-TRADUCIR EL MENSAJE DE ALERTA SI ACTIVO - DEPURACIÓN ULTRA-DETALLADA**
     const alertElement = document.getElementById('earthquakeAlert');
     if (!alertElement.classList.contains('hidden')) {
-        console.log("  Alerta activa detectada, re-traducción del mensaje en curso...");
+        console.log("Alerta activa detectada, re-traducción del mensaje en curso...");
         const alertDetails = document.getElementById('alertDetails');
         let alertMessage = alertDetails.textContent;
-        console.log("    Mensaje de alerta actual (antes de la re-traducción):", alertMessage);
+        console.log("Mensaje de alerta actual (antes de la re-traducción):", alertMessage);
 
         // Determinar si es alerta significativa o cercana
         if (alertMessage.includes(translations[document.getElementById('language-selector').value].alerta_significativo.split(' ')[0])) {
-            console.log("    Re-traducir como alerta significativa");
+            console.log("Re-traducir como alerta significativa");
             // Reconstruir el mensaje de alerta significativa
             let magnitudeMatch = alertMessage.match(/(\d+(\.\d+)?)/); // Buscar magnitud (número decimal)
             let lugarMatch = alertMessage.match(/en (.+?)!/); // Buscar lugar (entre "en" y "!")
@@ -573,15 +572,15 @@ function translatePage(language) {
                     .replace('%{magnitude}', magnitude)
                     .replace('%{lugar}', lugar);
 
-                alertDetails.innerHTML = newAlertMessage; // Usar innerHTML también aquí por consistencia
-                console.log("    Mensaje de alerta re-traducido a:", newAlertMessage);
+                alertDetails.innerHTML = newAlertMessage;
+                console.log("Mensaje de alerta re-traducido a:", newAlertMessage);
             } else {
-                console.warn("    No se pudieron extraer magnitud o lugar del mensaje de alerta significativa para la re-traducción.");
+                console.warn("No se pudieron extraer magnitud o lugar del mensaje de alerta significativa para la re-traducción.");
             }
 
 
         } else if (alertMessage.includes(translations[document.getElementById('language-selector').value].alerta_cercano.split(' ')[0])) {
-            console.log("    Re-traducir como alerta cercana");
+            console.log("Re-traducir como alerta cercana");
             // Reconstruir el mensaje de alerta cercana
             let magnitudeCercanoMatch = alertMessage.match(/(\d+(\.\d+)?)/); // Buscar magnitud (número decimal)
 
@@ -593,16 +592,16 @@ function translatePage(language) {
                     .replace('%{magnitude}', magnitudeCercano);
 
 
-                alertDetails.innerHTML = newCercanoAlertMessage; // Usar innerHTML también aquí por consistencia
-                console.log("    Mensaje de alerta re-traducido a:", newCercanoAlertMessage);
+                alertDetails.innerHTML = newCercanoAlertMessage;
+                console.log("Mensaje de alerta re-traducido a:", newCercanoAlertMessage);
             } else {
-                console.warn("    No se pudo extraer la magnitud del mensaje de alerta cercana para la re-traducción.");
+                console.warn("No se pudo extraer la magnitud del mensaje de alerta cercana para la re-traducción.");
             }
         } else {
-            console.warn("    Tipo de alerta no reconocido para la re-traducción o no es ninguna alerta de terremoto.");
+            console.warn("Tipo de alerta no reconocido para la re-traducción o no es ninguna alerta de terremoto.");
         }
     } else {
-        console.log("  No hay alerta activa, no es necesaria la re-traducción.");
+        console.log("No hay alerta activa, no es necesaria la re-traducción.");
     }
 }
 
