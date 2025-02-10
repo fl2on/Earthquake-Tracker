@@ -2,7 +2,7 @@
 
 # Seismic Global Information Center <img src="img/favicon.png" width="95" height="95" align="right" />
 
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)  [![Built With HTML, CSS, JavaScript](https://img.shields.io/badge/Built%20with-HTML%20%7C%20CSS%20%7C%20JavaScript-orange)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![License](https://img.shields.io/badge/License-Apache2.0-blue.svg)](LICENSE)  [![Built With HTML, CSS, JavaScript](https://img.shields.io/badge/Built%20with-HTML%20%7C%20CSS%20%7C%20JavaScript-orange)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![Leaflet](https://img.shields.io/badge/Map-Leaflet-0078A8?logo=leaflet&logoColor=white)](https://leafletjs.com/)
 [![Chart.js](https://img.shields.io/badge/Charts-Chart.js-FF6384?logo=chart.js&logoColor=white)](https://www.chartjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Styling-Tailwind%20CSS-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
@@ -120,7 +120,7 @@ This project would not have been possible without the amazing open-source librar
 
 ## 📝 License
 
-This project is distributed under the [MIT License](LICENSE) (If you have chosen an MIT license or another one. Replace and adjust according to your license). See the `LICENSE` file for more details.
+This project is distributed under the [Apache 2.0 License](LICENSE) (If you have chosen an MIT license or another one. Replace and adjust according to your license). See the `LICENSE` file for more details.
 
 ## 🧑‍💻 Author
 
